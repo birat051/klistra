@@ -21,9 +21,9 @@ The order within each task follows a strict rule:
 
 ## T2 · Git hooks, coverage enforcement & commit conventions
 
-- [ ] Install Husky and initialise it in the repo (`husky init`)
-- [ ] Install `lint-staged` and add it to `package.json`
-- [ ] Configure `lint-staged` in `package.json` to run ESLint and Prettier on staged `.ts` / `.tsx` / `.json` / `.md` files
+- [x] Install Husky and initialise it in the repo (`husky init`)
+- [x] Install `lint-staged` and add it to `package.json`
+- [x] Configure `lint-staged` in `package.json` to run ESLint and Prettier on staged `.ts` / `.tsx` / `.json` / `.md` files
 
   ```jsonc
   // package.json
@@ -35,15 +35,15 @@ The order within each task follows a strict rule:
   }
   ```
 
-- [ ] Create `.husky/pre-commit` — runs `lint-staged` on every commit; the commit is blocked if lint-staged exits non-zero
+- [x] Create `.husky/pre-commit` — runs `lint-staged` on every commit; the commit is blocked if lint-staged exits non-zero
 
   ```sh
   # .husky/pre-commit
   npx lint-staged
   ```
 
-- [ ] Install `@commitlint/cli` and `@commitlint/config-conventional`
-- [ ] Create `commitlint.config.ts` enforcing the project's commit convention
+- [x] Install `@commitlint/cli` and `@commitlint/config-conventional`
+- [x] Create `commitlint.config.ts` enforcing the project's commit convention
 
   ```ts
   // commitlint.config.ts
@@ -64,14 +64,14 @@ The order within each task follows a strict rule:
   }
   ```
 
-- [ ] Create `.husky/commit-msg` — runs commitlint on the commit message; the commit is blocked if the message does not match the convention
+- [x] Create `.husky/commit-msg` — runs commitlint on the commit message; the commit is blocked if the message does not match the convention
 
   ```sh
   # .husky/commit-msg
   npx --no -- commitlint --edit "$1"
   ```
 
-- [ ] Configure Vitest coverage in `vitest.config.ts` (Next.js uses a separate Vitest config, not `vite.config.ts`) using `@vitest/coverage-v8`
+- [x] Configure Vitest coverage in `vitest.config.ts` (Next.js uses a separate Vitest config, not `vite.config.ts`) using `@vitest/coverage-v8`
 
   ```ts
   // vitest.config.ts
@@ -110,7 +110,7 @@ The order within each task follows a strict rule:
   })
   ```
 
-- [ ] Create `.husky/pre-push` — runs the full test suite with coverage before every `git push`; the push is blocked if coverage falls below 80% on any metric or if any test fails
+- [x] Create `.husky/pre-push` — runs the full test suite with coverage before every `git push`; the push is blocked if coverage falls below 80% on any metric or if any test fails
 
   ```sh
   # .husky/pre-push

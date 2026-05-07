@@ -20,6 +20,45 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Commit conventions
+
+Commits must satisfy **§15 — Commit message rules** in [`docs/PROJECT_GUIDELINES.MD`](docs/PROJECT_GUIDELINES.MD). Husky runs **commitlint** on each commit (see `commitlint.config.ts`), so invalid messages are rejected locally.
+
+**Format:** `type(scope): Short description`
+
+- **Sentence case** for the subject (first word capitalized), **present tense**, **no full stop** at the end.
+- **Scope is required.** Use a module or area name from the list below.
+
+**Allowed types**
+
+| Type       | Use for                                     |
+| ---------- | ------------------------------------------- |
+| `feat`     | New user-facing functionality               |
+| `fix`      | Bug fix                                     |
+| `test`     | Adding or updating tests only               |
+| `refactor` | Code change with no behaviour change        |
+| `chore`    | Dependency updates, config changes, tooling |
+| `docs`     | README, comments, guidelines only           |
+| `perf`     | Performance improvement                     |
+
+**Allowed scopes**
+
+`landing`, `dashboard`, `canvas`, `auth`, `room`, `common`, `infra`, `deps`, `readme`
+
+**Examples**
+
+```
+feat(dashboard): Add collaborating section to dashboard page
+fix(canvas): Prevent note creation when clicking existing note
+chore(infra): Add husky pre-push coverage gate
+docs(readme): Document commit conventions
+```
+
+**Also**
+
+- Prefer **one logical change** per commit; split if you need “and” to describe it.
+- Do **not** use `git commit --no-verify` to skip hooks unless there is an exceptional reason documented with the team.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
