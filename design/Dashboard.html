@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Klistra — your canvases</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      const I18N = (window.I18N = {
+        en: {
+          greet_a: 'Welcome back, ',
+          greet_b: '.',
+          greet_sub: 'Pick up where you left off, or start something new.',
+          search_placeholder: 'Search canvases…',
+          sort_label: 'Sort',
+          sort_recent: 'Recent',
+          sort_alpha: 'A–Z',
+          sort_active: 'Most active',
+          section_yours: 'Yours',
+          section_shared: 'Shared with you',
+          count_doc: 'canvas',
+          count_docs: 'canvases',
+          you: 'You',
+          live: 'Live',
+          share_aria: 'Add collaborators',
+          invite_short: 'Invite',
+          invite_title: 'Share this canvas',
+          invite_placeholder: 'name@team.com',
+          invite_send: 'Invite',
+          invite_empty: 'No collaborators yet — invite someone by email.',
+          invite_pending: 'pending',
+          role_editor: 'editor',
+          role_viewer: 'viewer',
+          role_owner: 'owner',
+          fab_label: 'New canvas',
+          fab_aria: 'Create new canvas',
+          new_title: 'Name your canvas',
+          new_sub: 'You can rename it any time.',
+          new_placeholder: 'e.g. Sprint retro · week 18',
+          new_create: 'Create canvas',
+          cancel: 'Cancel',
+          just_now: 'just now',
+          empty_title: 'Nothing shared with you yet',
+          empty_sub: 'Invite someone to a canvas, or create your own to get started.',
+          empty_cta: 'Create your first canvas',
+          nores_title: 'No matches',
+          nores_sub: 'Try a different search term.',
+          menu_account: 'Account',
+          menu_settings: 'Settings',
+          menu_help: 'Help & shortcuts',
+          menu_signout: 'Sign out',
+        },
+        sv: {
+          greet_a: 'Välkommen tillbaka, ',
+          greet_b: '.',
+          greet_sub: 'Forsätt där du slutade, eller starta något nytt.',
+          search_placeholder: 'Sök ytor…',
+          sort_label: 'Sortera',
+          sort_recent: 'Senaste',
+          sort_alpha: 'A–Ö',
+          sort_active: 'Mest aktiva',
+          section_yours: 'Mina ytor',
+          section_shared: 'Delade med mig',
+          count_doc: 'yta',
+          count_docs: 'ytor',
+          you: 'Du',
+          live: 'Live',
+          share_aria: 'Lägg till medarbetare',
+          invite_short: 'Bjud in',
+          invite_title: 'Dela den här ytan',
+          invite_placeholder: 'namn@team.se',
+          invite_send: 'Bjud in',
+          invite_empty: 'Inga medarbetare än — bjud in någon via e-post.',
+          invite_pending: 'väntar',
+          role_editor: 'redigerare',
+          role_viewer: 'läsare',
+          role_owner: 'ägare',
+          fab_label: 'Ny yta',
+          fab_aria: 'Skapa ny yta',
+          new_title: 'Namnge din yta',
+          new_sub: 'Du kan döpa om den när som helst.',
+          new_placeholder: 't.ex. Sprint-retro · v.18',
+          new_create: 'Skapa yta',
+          cancel: 'Avbryt',
+          just_now: 'just nu',
+          empty_title: 'Inget är delat med dig än',
+          empty_sub: 'Bjud in någon till en yta, eller skapa en egen för att komma igång.',
+          empty_cta: 'Skapa din första yta',
+          nores_title: 'Inga träffar',
+          nores_sub: 'Prova en annan sökterm.',
+          menu_account: 'Konto',
+          menu_settings: 'Inställningar',
+          menu_help: 'Hjälp & genvägar',
+          menu_signout: 'Logga ut',
+        },
+      })
+
+      const TWEAKS = /*EDITMODE-BEGIN*/ {
+        brand_color: '#3a5a78',
+        lang: 'en',
+      } /*EDITMODE-END*/
+
+      function applyBrand(hex) {
+        document.documentElement.style.setProperty('--brand', hex)
+        document.documentElement.style.setProperty(
+          '--brand-soft',
+          `color-mix(in oklch, ${hex} 14%, white)`,
+        )
+        document.documentElement.style.setProperty(
+          '--brand-ink',
+          `color-mix(in oklch, ${hex} 70%, black 30%)`,
+        )
+      }
+      function applyLang(lang) {
+        document.documentElement.lang = lang
+      }
+
+      applyBrand(TWEAKS.brand_color)
+      applyLang(TWEAKS.lang)
+    </script>
+
+    <script type="text/babel" src="dashboard.jsx"></script>
+    <script type="text/babel" data-presets="env,react">
+      function makeT(lang) {
+        const dict = I18N[lang] || I18N.en
+        return (k) => (dict[k] !== undefined ? dict[k] : I18N.en[k] || k)
+      }
+
+      function App() {
+        const [lang, setLang] = React.useState(TWEAKS.lang)
+        const [brand, setBrand] = React.useState(TWEAKS.brand_color)
+
+        React.useEffect(() => {
+          applyBrand(brand)
+        }, [brand])
+        React.useEffect(() => {
+          applyLang(lang)
+        }, [lang])
+        window.__setLang = setLang
+        window.__setBrand = setBrand
+
+        return <Dashboard t={makeT(lang)} />
+      }
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+    </script>
+
+    <script type="text/babel" src="tweaks-panel.jsx"></script>
+    <script type="text/babel" data-presets="env,react">
+      const { TweaksPanel, TweakSection, TweakColor, TweakRadio, useTweaks } = window
+
+      function TweaksApp() {
+        const [t, setTweak] = useTweaks(TWEAKS)
+        React.useEffect(() => {
+          window.__setBrand && window.__setBrand(t.brand_color)
+        }, [t.brand_color])
+        React.useEffect(() => {
+          window.__setLang && window.__setLang(t.lang)
+        }, [t.lang])
+
+        return (
+          <TweaksPanel>
+            <TweakSection title="Brand">
+              <TweakColor
+                label="Accent color"
+                value={t.brand_color}
+                onChange={(v) => setTweak('brand_color', v)}
+                options={['#5b7fb3', '#3a5a78', '#7a9b6a', '#b08968']}
+              />
+            </TweakSection>
+            <TweakSection title="Language">
+              <TweakRadio
+                label="Locale"
+                value={t.lang}
+                onChange={(v) => setTweak('lang', v)}
+                options={[
+                  { value: 'en', label: 'English' },
+                  { value: 'sv', label: 'Svenska' },
+                ]}
+              />
+            </TweakSection>
+          </TweaksPanel>
+        )
+      }
+      const tm = document.createElement('div')
+      document.body.appendChild(tm)
+      ReactDOM.createRoot(tm).render(<TweaksApp />)
+    </script>
+  </body>
+</html>

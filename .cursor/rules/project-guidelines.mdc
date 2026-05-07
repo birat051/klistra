@@ -1,0 +1,21 @@
+---
+description: Klistra project standards — authoritative rules in docs/PROJECT_GUIDELINES.MD
+alwaysApply: true
+---
+
+# Klistra — follow `docs/PROJECT_GUIDELINES.MD`
+
+Treat **[`docs/PROJECT_GUIDELINES.MD`](docs/PROJECT_GUIDELINES.MD)** as binding for every change in this repo. Open and apply it when architecture, naming, routing, data flow, tests, tasks, commits, or PRs are involved.
+
+## Non‑negotiable highlights
+
+- **Layout:** Page code lives in `src/modules/<module>/` (`components/`, `store/`, `utils/`, `services/`, `api/`). Shared code → `src/common/`. **`app/`** holds only route shells (page, layout, loading, error) — no business logic or feature components there.
+- **Imports:** No cross-module imports; share via `src/common/`. Middleware imports only from `src/common/`.
+- **Naming:** Kebab-case files; interfaces `I_SCOPE_Name`, enums `E_SCOPE_Name`; components are **named exports** (default only for Next.js `page.tsx` / `layout.tsx`).
+- **Server vs client:** Server Components by default; `'use client'` only when hooks, events, or browser APIs are required; push the boundary to leaves.
+- **State:** Yjs for collaborative data; Zustand for ephemeral UI — never mix.
+- **Auth routing:** Only in root **`middleware.ts`**, not in pages/layouts.
+- **Types:** No `any`.
+- **Tasks / checklist:** Mark `docs/TASK_CHECKLIST.MD` items done only per **§14** (verified execution; full gate for a task = subtasks + tests + lint).
+
+When in doubt, read the full guideline document — it overrides generic Next.js or React habits.

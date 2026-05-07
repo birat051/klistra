@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Klistra — think together, online or off</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="hero-demo.css" />
+
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="#top">
+          <span class="brand__mark"></span>
+          <span class="brand__name">klistra</span>
+        </a>
+        <nav class="nav">
+          <a href="#how" data-i18n="nav_how">How it works</a>
+          <a href="#features" data-i18n="nav_features">Features</a>
+          <a href="#cases" data-i18n="nav_cases">Use cases</a>
+        </nav>
+        <div class="header-right">
+          <div class="lang-toggle" role="group" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="sv" aria-pressed="false">SV</button>
+          </div>
+          <button type="button" class="gbtn gbtn--sm js-google-signin">
+            <svg class="gbtn__g" viewBox="0 0 48 48" aria-hidden="true">
+              <path
+                fill="#EA4335"
+                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+              />
+              <path
+                fill="#4285F4"
+                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+              />
+              <path
+                fill="#34A853"
+                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+              />
+            </svg>
+            <span data-i18n="cta_primary">Continue with Google</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ---------- HERO ---------- -->
+    <section class="hero" id="top">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <span class="eyebrow" data-i18n="hero_eyebrow">A canvas for thinking together</span>
+          <h1>
+            <span data-i18n="hero_h1_a">A sticky-note canvas you</span>
+            <em data-i18n="hero_h1_em">never lose</em><span data-i18n="hero_h1_b">.</span>
+          </h1>
+          <p class="lede" data-i18n="hero_lede">
+            Klistra keeps everyone's notes in one room — with rich text, peer cursors, and a history
+            you can rewind. Edits keep working when the wifi doesn't.
+          </p>
+          <div class="hero__ctas">
+            <button type="button" class="gbtn gbtn--lg js-google-signin">
+              <svg class="gbtn__g" viewBox="0 0 48 48" aria-hidden="true">
+                <path
+                  fill="#EA4335"
+                  d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                />
+                <path
+                  fill="#4285F4"
+                  d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                />
+              </svg>
+              <span data-i18n="cta_primary">Continue with Google</span>
+            </button>
+            <a class="btn btn--ghost btn--lg" href="#how" data-i18n="cta_secondary"
+              >See how it works</a
+            >
+          </div>
+          <div class="hero__meta">
+            <span
+              ><span class="dot"></span
+              ><span data-i18n="meta_realtime">Real-time, peer-to-peer</span></span
+            >
+            <span data-i18n="meta_offline">Offline-first</span>
+            <span data-i18n="meta_versioned">Versioned</span>
+          </div>
+        </div>
+        <div class="hero__demo" id="hero-demo-mount"></div>
+      </div>
+    </section>
+
+    <!-- ---------- HOW IT WORKS ---------- -->
+    <section class="section section--alt" id="how">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="how_eyebrow">How it works</span>
+          <h2>
+            <span data-i18n="how_h2_a">Your edits land in </span
+            ><em data-i18n="how_h2_em">four places</em><span data-i18n="how_h2_b">, in order.</span>
+          </h2>
+          <p class="section__sub" data-i18n="how_sub">
+            The first two are instant. The last two happen in the background, so the canvas never
+            waits on the network. That's why typing feels the same online and off.
+          </p>
+        </div>
+
+        <div class="how">
+          <div class="how__copy">
+            <h3 data-i18n="how_copy_h">A write is "done" the moment your screen updates.</h3>
+            <p data-i18n="how_copy_p">
+              Real-time sync between people stays peer-to-peer. The cloud is for persistence,
+              history, and joining a room you've never opened before — not the keystroke path.
+            </p>
+            <ul class="how__list">
+              <li>
+                <span class="badge">CRDT</span>
+                <div>
+                  <strong data-i18n="how_li1_t">Conflict-free by construction</strong>
+                  <span data-i18n="how_li1_d"
+                    >Concurrent edits converge — no merge UI, no lost characters.</span
+                  >
+                </div>
+              </li>
+              <li>
+                <span class="badge">P2P</span>
+                <div>
+                  <strong data-i18n="how_li2_t">Peer-to-peer real-time</strong>
+                  <span data-i18n="how_li2_d"
+                    >WebRTC moves your edits between teammates directly.</span
+                  >
+                </div>
+              </li>
+              <li>
+                <span class="badge">CLOUD</span>
+                <div>
+                  <strong data-i18n="how_li3_t">Cloud as memory, not bottleneck</strong>
+                  <span data-i18n="how_li3_d"
+                    >Snapshots and a structured changelog flow to Firestore in the background.</span
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="flow" aria-label="Sync hierarchy">
+            <div class="flow__title" data-i18n="flow_title">Sync hierarchy · per write</div>
+
+            <div class="flow__row">
+              <span class="flow__num">01</span>
+              <div class="flow__label">
+                <span data-i18n="flow_1_t">Yjs document</span>
+                <span class="small">in-memory · ~0 ms</span>
+              </div>
+              <span class="flow__pill flow__pill--sync" data-i18n="flow_sync">sync</span>
+            </div>
+
+            <div class="flow__row">
+              <span class="flow__num">02</span>
+              <div class="flow__label">
+                <span data-i18n="flow_2_t">y-indexeddb</span>
+                <span class="small">survives refresh, no network</span>
+              </div>
+              <span class="flow__pill flow__pill--sync" data-i18n="flow_sync">sync</span>
+            </div>
+
+            <div class="flow__row">
+              <span class="flow__num">03</span>
+              <div class="flow__label">
+                <span data-i18n="flow_3_t">y-webrtc</span>
+                <span class="small">connected peers · &lt; 100 ms typical</span>
+              </div>
+              <span class="flow__pill flow__pill--async" data-i18n="flow_async">async</span>
+            </div>
+
+            <div class="flow__row">
+              <span class="flow__num">04</span>
+              <div class="flow__label">
+                <span data-i18n="flow_4_t">Firestore</span>
+                <span class="small">snapshots + changelog · debounced</span>
+              </div>
+              <span class="flow__pill flow__pill--async" data-i18n="flow_async">async</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- FEATURES ---------- -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="feat_eyebrow">Features</span>
+          <h2>
+            <span data-i18n="feat_h2_a">Built for the messy </span
+            ><em data-i18n="feat_h2_em">middle</em><span data-i18n="feat_h2_b"> of a project.</span>
+          </h2>
+        </div>
+
+        <div class="features">
+          <article class="feature">
+            <div class="feature__visual" data-visual="richtext">
+              <!-- mini note showing rich text -->
+              <div
+                class="vfeat-note"
+                style="background: var(--note-mist); transform: rotate(-1.5deg)"
+              >
+                <div class="vfeat-h">Sprint goals</div>
+                <div class="vfeat-b">
+                  <strong>Bold ideas</strong>, <em>italic doubts</em>,
+                  <span class="vfeat-code">code</span>, and <span class="vfeat-link">links</span>.
+                </div>
+              </div>
+            </div>
+            <h3 data-i18n="feat1_t">Rich text in every note</h3>
+            <p data-i18n="feat1_p">
+              Headings, lists, quotes, code, links — Tiptap inside each note, with concurrent
+              formatting that converges. Two people can bold the same word at once.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="feature__visual" data-visual="offline">
+              <div class="vfeat-offline">
+                <div class="vfeat-bar">
+                  <span class="vfeat-bar-dot" id="vfeat-bar-dot"></span>
+                  <span id="vfeat-bar-label">Offline · queued</span>
+                </div>
+                <div class="vfeat-queue">
+                  <div class="vfeat-queue-row">+ note "Risk"</div>
+                  <div class="vfeat-queue-row">edit "Hypothesis"</div>
+                  <div class="vfeat-queue-row">move 3 notes</div>
+                </div>
+              </div>
+            </div>
+            <h3 data-i18n="feat2_t">Edits that survive bad wifi</h3>
+            <p data-i18n="feat2_p">
+              Every change lands in your local Yjs doc and IndexedDB before anything else. Lose your
+              connection mid-thought — keep typing. We'll sync the rest later.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="feature__visual" data-visual="history">
+              <div class="vfeat-timeline">
+                <div class="vfeat-tl-row">
+                  <span class="vfeat-tl-dot"></span><span class="vfeat-tl-time">14:32</span
+                  ><span class="vfeat-tl-evt">Anna edited "Hypothesis"</span>
+                </div>
+                <div class="vfeat-tl-row is-snap">
+                  <span class="vfeat-tl-dot is-brand"></span><span class="vfeat-tl-time">14:00</span
+                  ><span class="vfeat-tl-evt">Snapshot · "Before review"</span>
+                </div>
+                <div class="vfeat-tl-row">
+                  <span class="vfeat-tl-dot"></span><span class="vfeat-tl-time">13:48</span
+                  ><span class="vfeat-tl-evt">Mikael added 3 notes</span>
+                </div>
+                <div class="vfeat-tl-row">
+                  <span class="vfeat-tl-dot"></span><span class="vfeat-tl-time">13:20</span
+                  ><span class="vfeat-tl-evt">Anna changed color</span>
+                </div>
+              </div>
+            </div>
+            <h3 data-i18n="feat3_t">A history you can rewind</h3>
+            <p data-i18n="feat3_p">
+              Every meaningful change is logged with author and time. Save named versions before
+              risky moments. Restore the canvas to any point — for everyone, at once.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="feature__visual" data-visual="presence">
+              <div class="vfeat-presence">
+                <div class="vfeat-cursor" style="left: 18%; top: 30%; --c: oklch(58% 0.13 245)">
+                  <span class="vfeat-clabel">Anna</span>
+                </div>
+                <div class="vfeat-cursor" style="left: 60%; top: 50%; --c: oklch(60% 0.13 28)">
+                  <span class="vfeat-clabel">Mikael</span>
+                </div>
+                <div class="vfeat-cursor" style="left: 78%; top: 22%; --c: oklch(60% 0.13 145)">
+                  <span class="vfeat-clabel">Sara</span>
+                </div>
+                <div class="vfeat-locked">
+                  <span class="vfeat-lock-dot"></span>
+                  Mikael is editing
+                </div>
+              </div>
+            </div>
+            <h3 data-i18n="feat4_t">See who's thinking with you</h3>
+            <p data-i18n="feat4_p">
+              Live cursors with names and colors, in-editor carets, and a soft lock when someone's
+              actively typing in a note. Presence is ephemeral — it never clutters history.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- USE CASES ---------- -->
+    <section class="section section--alt" id="cases">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="cases_eyebrow">Use cases</span>
+          <h2>
+            <span data-i18n="cases_h2_a">For the meetings where </span
+            ><em data-i18n="cases_h2_em">everyone has to write</em
+            ><span data-i18n="cases_h2_b">.</span>
+          </h2>
+        </div>
+
+        <div class="cases">
+          <article class="case">
+            <div class="case__num">01 / WORKSHOPS</div>
+            <h3 data-i18n="case1_t">Discovery workshops</h3>
+            <p data-i18n="case1_p">
+              Get the brief, the customer quotes, and the wild ideas onto one canvas before the
+              energy drains out of the room.
+            </p>
+            <div class="case__notes">
+              <div
+                class="note"
+                style="
+                  left: 0;
+                  top: 0;
+                  width: 60%;
+                  background: var(--note-cream);
+                  transform: rotate(-2deg);
+                "
+              >
+                <div class="note__h">Customer voice</div>
+                <div class="note__b" style="font-style: italic">
+                  "We keep losing context between rooms."
+                </div>
+              </div>
+              <div
+                class="note"
+                style="
+                  right: 0;
+                  top: 18px;
+                  width: 50%;
+                  background: var(--note-mist);
+                  transform: rotate(2deg);
+                "
+              >
+                <div class="note__h">Reframe</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case__num">02 / RETROS</div>
+            <h3 data-i18n="case2_t">Sprint retros</h3>
+            <p data-i18n="case2_p">
+              Three columns, six people, ten minutes of silent writing — then dot-vote. Distributed
+              teams get the same room as the people in person.
+            </p>
+            <div class="case__notes">
+              <div
+                class="note"
+                style="
+                  left: 0;
+                  top: 0;
+                  width: 32%;
+                  background: var(--note-sage);
+                  transform: rotate(-1.5deg);
+                "
+              >
+                <div class="note__h">Kept</div>
+              </div>
+              <div
+                class="note"
+                style="
+                  left: 35%;
+                  top: 8px;
+                  width: 32%;
+                  background: var(--note-sand);
+                  transform: rotate(1deg);
+                "
+              >
+                <div class="note__h">Tried</div>
+              </div>
+              <div
+                class="note"
+                style="
+                  right: 0;
+                  top: -2px;
+                  width: 32%;
+                  background: var(--note-rose);
+                  transform: rotate(-1deg);
+                "
+              >
+                <div class="note__h">Stuck</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case__num">03 / PLANNING</div>
+            <h3 data-i18n="case3_t">Quarterly planning</h3>
+            <p data-i18n="case3_p">
+              Drag bets across columns, rename a theme inline, restore yesterday's draft — and never
+              wonder which Slack thread had the latest version.
+            </p>
+            <div class="case__notes">
+              <div
+                class="note"
+                style="
+                  left: 4%;
+                  top: 8px;
+                  width: 42%;
+                  background: var(--note-slate);
+                  transform: rotate(-2deg);
+                "
+              >
+                <div class="note__h">Theme · Onboarding</div>
+              </div>
+              <div
+                class="note"
+                style="
+                  right: 4%;
+                  top: 0;
+                  width: 42%;
+                  background: var(--note-mist);
+                  transform: rotate(1.5deg);
+                "
+              >
+                <div class="note__h">Bet · Live demos</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CTA BAND ---------- -->
+    <section class="cta-band">
+      <div class="wrap">
+        <h2>
+          <span data-i18n="cta_h2_a">A canvas your team </span
+          ><em data-i18n="cta_h2_em">already trusts</em><span data-i18n="cta_h2_b">.</span>
+        </h2>
+        <p data-i18n="cta_sub">
+          Sign in with Google, name a room, share the link. Klistra is free while in beta.
+        </p>
+        <button type="button" class="gbtn gbtn--lg js-google-signin" style="margin: 0 auto">
+          <svg class="gbtn__g" viewBox="0 0 48 48" aria-hidden="true">
+            <path
+              fill="#EA4335"
+              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+            />
+            <path
+              fill="#4285F4"
+              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+            />
+            <path
+              fill="#34A853"
+              d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+            />
+          </svg>
+          <span data-i18n="cta_primary">Continue with Google</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div>
+        <span class="brand">
+          <span class="brand__mark"></span>
+          <span class="brand__name">klistra</span>
+        </span>
+        <span style="margin-left: 14px; color: var(--ink-3)"
+          >© 2026 · <span data-i18n="footer_built">Built in Stockholm</span></span
+        >
+      </div>
+      <div class="links">
+        <a href="#how" data-i18n="nav_how">How it works</a>
+        <a href="#features" data-i18n="nav_features">Features</a>
+        <button type="button" class="footer-signin-btn js-google-signin" data-i18n="footer_signin">
+          Sign in with Google
+        </button>
+      </div>
+    </footer>
+
+    <!-- mini-feature visuals styles -->
+    <style>
+      .feature__visual {
+        padding: 14px;
+      }
+      .vfeat-note {
+        width: 80%;
+        margin: 10px auto 0;
+        background: var(--note-mist);
+        border-radius: 4px 6px 4px 5px;
+        padding: 12px 14px;
+        box-shadow: var(--shadow-note);
+        font-family: var(--font-ui);
+      }
+      .vfeat-h {
+        font-family: var(--font-display);
+        font-size: 14px;
+        margin-bottom: 4px;
+        color: oklch(22% 0.02 250);
+      }
+      .vfeat-b {
+        font-size: 12.5px;
+        line-height: 1.5;
+        color: oklch(28% 0.02 250);
+      }
+      .vfeat-code {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        background: rgba(20, 30, 50, 0.06);
+        padding: 1px 4px;
+        border-radius: 3px;
+      }
+      .vfeat-link {
+        color: var(--brand-ink);
+        text-decoration: underline;
+        text-decoration-style: wavy;
+        text-decoration-thickness: 1px;
+      }
+
+      .vfeat-offline {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 6px;
+      }
+      .vfeat-bar {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: oklch(96% 0.005 250);
+        border: 1px solid var(--rule);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        align-self: flex-start;
+      }
+      .vfeat-bar-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: oklch(75% 0.005 250);
+      }
+      .vfeat-queue {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 6px 0;
+      }
+      .vfeat-queue-row {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--ink-2);
+        padding: 4px 8px;
+        background: var(--paper-2);
+        border-radius: 4px;
+        border-left: 2px solid var(--brand);
+      }
+
+      .vfeat-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        padding: 6px 4px;
+      }
+      .vfeat-tl-row {
+        display: grid;
+        grid-template-columns: 14px 44px 1fr;
+        gap: 8px;
+        align-items: center;
+        font-size: 12px;
+      }
+      .vfeat-tl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: oklch(80% 0.01 250);
+        margin-left: 3px;
+      }
+      .vfeat-tl-dot.is-brand {
+        background: var(--brand);
+        box-shadow: 0 0 0 3px var(--brand-soft);
+      }
+      .vfeat-tl-time {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        color: var(--ink-3);
+      }
+      .vfeat-tl-evt {
+        color: var(--ink-2);
+      }
+      .vfeat-tl-row.is-snap .vfeat-tl-evt {
+        color: var(--brand-ink);
+        font-weight: 500;
+      }
+
+      .vfeat-presence {
+        position: relative;
+        height: 100%;
+      }
+      .vfeat-cursor {
+        position: absolute;
+      }
+      .vfeat-cursor::before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 8px solid var(--c);
+        border-top: 8px solid var(--c);
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-top-left-radius: 3px;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+      }
+      .vfeat-clabel {
+        position: absolute;
+        top: 14px;
+        left: 10px;
+        background: var(--c);
+        color: white;
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 3px 3px 3px 0;
+        font-weight: 500;
+      }
+      .vfeat-locked {
+        position: absolute;
+        bottom: 6px;
+        left: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .vfeat-lock-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: oklch(70% 0.13 80);
+        animation: pulse 2s infinite;
+      }
+    </style>
+
+    <script>
+      ;(function () {
+        const GOOGLE_OAUTH = 'https://accounts.google.com/o/oauth2/v2/auth'
+        document.querySelectorAll('.js-google-signin').forEach((b) => {
+          b.addEventListener('click', (e) => {
+            e.preventDefault()
+            const label = b.querySelector('span')
+            const original = b.innerHTML
+            b.disabled = true
+            const loadingTxt =
+              (window.I18N &&
+                window.I18N[document.documentElement.lang] &&
+                window.I18N[document.documentElement.lang].signin_loading) ||
+              'Connecting to Google…'
+            b.innerHTML = '<span class="spin"></span><span>' + loadingTxt + '</span>'
+            setTimeout(() => {
+              window.location.href = GOOGLE_OAUTH
+            }, 450)
+          })
+        })
+      })()
+    </script>
+
+    <!-- i18n strings -->
+    <script>
+      const I18N = (window.I18N = {
+        en: {
+          nav_how: 'How it works',
+          nav_features: 'Features',
+          nav_cases: 'Use cases',
+          cta_primary: 'Continue with Google',
+          cta_secondary: 'See how it works',
+          signin_modal_title: 'Sign in to Klistra',
+          signin_modal_sub:
+            'Use your Google account to open or join a canvas. Your rooms stay private to you and the people you invite.',
+          signin_loading: 'Connecting to Google\u2026',
+          signin_legal:
+            'By continuing you agree to our Terms and acknowledge our Privacy notice. Identity is handled by Firebase Auth \u2014 no third-party trackers.',
+          signin_cancel: 'Cancel',
+          footer_signin_long: 'Sign in with Google',
+          hero_eyebrow: 'A canvas for thinking together',
+          hero_h1_a: 'A sticky-note canvas you ',
+          hero_h1_em: 'never lose',
+          hero_h1_b: '.',
+          hero_lede:
+            "Klistra keeps everyone's notes in one room — with rich text, peer cursors, and a history you can rewind. Edits keep working when the wifi doesn't.",
+          meta_realtime: 'Real-time, peer-to-peer',
+          meta_offline: 'Offline-first',
+          meta_versioned: 'Versioned',
+          how_eyebrow: 'How it works',
+          how_h2_a: 'Your edits land in ',
+          how_h2_em: 'four places',
+          how_h2_b: ', in order.',
+          how_sub:
+            "The first two are instant. The last two happen in the background, so the canvas never waits on the network. That's why typing feels the same online and off.",
+          how_copy_h: 'A write is "done" the moment your screen updates.',
+          how_copy_p:
+            "Real-time sync between people stays peer-to-peer. The cloud is for persistence, history, and joining a room you've never opened before — not the keystroke path.",
+          how_li1_t: 'Conflict-free by construction',
+          how_li1_d: 'Concurrent edits converge — no merge UI, no lost characters.',
+          how_li2_t: 'Peer-to-peer real-time',
+          how_li2_d: 'WebRTC moves your edits between teammates directly.',
+          how_li3_t: 'Cloud as memory, not bottleneck',
+          how_li3_d: 'Snapshots and a structured changelog flow to Firestore in the background.',
+          flow_title: 'Sync hierarchy · per write',
+          flow_1_t: 'Yjs document',
+          flow_2_t: 'y-indexeddb',
+          flow_3_t: 'y-webrtc',
+          flow_4_t: 'Firestore',
+          flow_sync: 'sync',
+          flow_async: 'async',
+          feat_eyebrow: 'Features',
+          feat_h2_a: 'Built for the messy ',
+          feat_h2_em: 'middle',
+          feat_h2_b: ' of a project.',
+          feat1_t: 'Rich text in every note',
+          feat1_p:
+            'Headings, lists, quotes, code, links — Tiptap inside each note, with concurrent formatting that converges. Two people can bold the same word at once.',
+          feat2_t: 'Edits that survive bad wifi',
+          feat2_p:
+            "Every change lands in your local Yjs doc and IndexedDB before anything else. Lose your connection mid-thought — keep typing. We'll sync the rest later.",
+          feat3_t: 'A history you can rewind',
+          feat3_p:
+            'Every meaningful change is logged with author and time. Save named versions before risky moments. Restore the canvas to any point — for everyone, at once.',
+          feat4_t: "See who's thinking with you",
+          feat4_p:
+            "Live cursors with names and colors, in-editor carets, and a soft lock when someone's actively typing in a note. Presence is ephemeral — it never clutters history.",
+          cases_eyebrow: 'Use cases',
+          cases_h2_a: 'For the meetings where ',
+          cases_h2_em: 'everyone has to write',
+          cases_h2_b: '.',
+          case1_t: 'Discovery workshops',
+          case1_p:
+            'Get the brief, the customer quotes, and the wild ideas onto one canvas before the energy drains out of the room.',
+          case2_t: 'Sprint retros',
+          case2_p:
+            'Three columns, six people, ten minutes of silent writing — then dot-vote. Distributed teams get the same room as the people in person.',
+          case3_t: 'Quarterly planning',
+          case3_p:
+            "Drag bets across columns, rename a theme inline, restore yesterday's draft — and never wonder which Slack thread had the latest version.",
+          cta_h2_a: 'A canvas your team ',
+          cta_h2_em: 'already trusts',
+          cta_h2_b: '.',
+          cta_sub:
+            'Sign in with Google, name a room, share the link. Klistra is free while in beta.',
+          footer_built: 'Built in Stockholm',
+          footer_signin: 'Sign in with Google',
+        },
+        sv: {
+          nav_how: 'Så funkar det',
+          nav_features: 'Funktioner',
+          nav_cases: 'Användning',
+          cta_primary: 'Fortsätt med Google',
+          cta_secondary: 'Se hur det funkar',
+          signin_modal_title: 'Logga in på Klistra',
+          signin_modal_sub:
+            'Använd ditt Google-konto för att öppna eller gå med i en yta. Dina rum förblir privata för dig och de du bjuder in.',
+          signin_loading: 'Ansluter till Google\u2026',
+          signin_legal:
+            'Genom att fortsätta godkänner du våra villkor och bekräftar vår integritetspolicy. Identitet hanteras av Firebase Auth \u2014 inga tredjepartsmätare.',
+          signin_cancel: 'Avbryt',
+          footer_signin_long: 'Logga in med Google',
+          hero_eyebrow: 'En yta för att tänka tillsammans',
+          hero_h1_a: 'En post-it-yta som ',
+          hero_h1_em: 'aldrig försvinner',
+          hero_h1_b: '.',
+          hero_lede:
+            'Klistra håller allas lappar i samma rum — med rik text, livecursor och en historik du kan spola tillbaka. Det funkar även när wifi:t inte gör det.',
+          meta_realtime: 'Realtid, peer-to-peer',
+          meta_offline: 'Offline-först',
+          meta_versioned: 'Versionerad',
+          how_eyebrow: 'Så funkar det',
+          how_h2_a: 'Dina ändringar landar på ',
+          how_h2_em: 'fyra ställen',
+          how_h2_b: ', i tur och ordning.',
+          how_sub:
+            'De två första är direkt. De två sista händer i bakgrunden, så ytan väntar aldrig på nätet. Därför känns det likadant online som offline.',
+          how_copy_h: 'En ändring är "klar" så fort skärmen uppdateras.',
+          how_copy_p:
+            'Realtidssynk mellan personer går peer-to-peer. Molnet är för minne, historik och att kunna öppna rum du aldrig sett förut — inte för varje tangenttryck.',
+          how_li1_t: 'Konfliktfritt från grunden',
+          how_li1_d:
+            'Samtidiga ändringar smälter ihop — ingen merge-dialog, inga förlorade tecken.',
+          how_li2_t: 'Peer-to-peer i realtid',
+          how_li2_d: 'WebRTC flyttar dina ändringar direkt mellan kollegor.',
+          how_li3_t: 'Molnet som minne, inte flaskhals',
+          how_li3_d: 'Snapshots och strukturerad logg skickas till Firestore i bakgrunden.',
+          flow_title: 'Synk-hierarki · per ändring',
+          flow_1_t: 'Yjs-dokument',
+          flow_2_t: 'y-indexeddb',
+          flow_3_t: 'y-webrtc',
+          flow_4_t: 'Firestore',
+          flow_sync: 'synk',
+          flow_async: 'async',
+          feat_eyebrow: 'Funktioner',
+          feat_h2_a: 'Byggd för den ',
+          feat_h2_em: 'stökiga mitten',
+          feat_h2_b: ' av ett projekt.',
+          feat1_t: 'Rik text i varje lapp',
+          feat1_p:
+            'Rubriker, listor, citat, kod, länkar — Tiptap i varje lapp, och samtidig formatering som möts utan konflikt. Två personer kan fetstila samma ord.',
+          feat2_t: 'Ändringar som överlever dåligt wifi',
+          feat2_p:
+            'Allt landar i ditt lokala Yjs-dokument och IndexedDB först. Tappa nätet mitt i en tanke — fortsätt skriva. Vi synkar resten sen.',
+          feat3_t: 'En historik du kan spola',
+          feat3_p:
+            'Varje meningsfull ändring loggas med författare och tid. Spara namngivna versioner inför stora steg. Återställ ytan till valfri punkt — för alla på en gång.',
+          feat4_t: 'Se vilka som tänker med dig',
+          feat4_p:
+            'Livecursor med namn och färg, carets i editorn, och en mjuk lås-indikator när någon skriver i en lapp. Närvaro är flyktig — den skräpar aldrig ner historiken.',
+          cases_eyebrow: 'Användning',
+          cases_h2_a: 'För mötena där ',
+          cases_h2_em: 'alla måste skriva',
+          cases_h2_b: '.',
+          case1_t: 'Insiktsworkshops',
+          case1_p:
+            'Få ner briefen, kundcitaten och de vilda idéerna på en yta innan energin runnit ut ur rummet.',
+          case2_t: 'Sprint-retron',
+          case2_p:
+            'Tre kolumner, sex personer, tio minuter tyst skrivande — sedan dot-vote. Distribuerade team får samma rum som de på plats.',
+          case3_t: 'Kvartalsplanering',
+          case3_p:
+            'Dra satsningar mellan kolumner, byt namn inline, återställ gårdagens utkast — och slipp gissa vilken Slack-tråd som hade senaste versionen.',
+          cta_h2_a: 'En yta ditt team ',
+          cta_h2_em: 'redan litar på',
+          cta_h2_b: '.',
+          cta_sub: 'Logga in med Google, döp ett rum, dela länken. Klistra är gratis under betan.',
+          footer_built: 'Byggd i Stockholm',
+          footer_signin: 'Logga in med Google',
+        },
+      })
+
+      const TWEAKS = /*EDITMODE-BEGIN*/ {
+        brand_color: '#5b7fb3',
+        lang: 'en',
+      } /*EDITMODE-END*/
+
+      function applyLang(lang) {
+        document.documentElement.lang = lang
+        const dict = I18N[lang] || I18N.en
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const k = el.getAttribute('data-i18n')
+          if (dict[k] !== undefined) el.textContent = dict[k]
+        })
+        document.querySelectorAll('.lang-toggle button').forEach((b) => {
+          b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false')
+        })
+      }
+
+      function applyBrand(hex) {
+        /* convert hex to oklch-ish via setting custom prop directly; let CSS handle the rest */
+        document.documentElement.style.setProperty('--brand', hex)
+        /* derive a soft tint and ink shade */
+        document.documentElement.style.setProperty(
+          '--brand-soft',
+          `color-mix(in oklch, ${hex} 14%, white)`,
+        )
+        document.documentElement.style.setProperty(
+          '--brand-ink',
+          `color-mix(in oklch, ${hex} 70%, black 30%)`,
+        )
+      }
+
+      document.querySelectorAll('.lang-toggle button').forEach((b) => {
+        b.addEventListener('click', () => {
+          TWEAKS.lang = b.dataset.lang
+          applyLang(TWEAKS.lang)
+          window.parent.postMessage(
+            { type: '__edit_mode_set_keys', edits: { lang: TWEAKS.lang } },
+            '*',
+          )
+        })
+      })
+
+      applyBrand(TWEAKS.brand_color)
+      applyLang(TWEAKS.lang)
+    </script>
+
+    <!-- Hero demo (React) -->
+    <script type="text/babel" src="hero-demo.jsx"></script>
+    <script type="text/babel" data-presets="env,react">
+      const mount = document.getElementById('hero-demo-mount')
+      const root = ReactDOM.createRoot(mount)
+
+      function HeroApp() {
+        const [online, setOnline] = React.useState(true)
+        return <HeroDemo online={online} setOnline={setOnline} />
+      }
+      root.render(<HeroApp />)
+    </script>
+
+    <!-- Tweaks panel -->
+    <script type="text/babel" src="tweaks-panel.jsx"></script>
+    <script type="text/babel" data-presets="env,react">
+      const { TweaksPanel, TweakSection, TweakColor, TweakRadio, useTweaks } = window
+
+      function TweaksApp() {
+        const [t, setTweak] = useTweaks(TWEAKS)
+
+        React.useEffect(() => {
+          applyBrand(t.brand_color)
+        }, [t.brand_color])
+        React.useEffect(() => {
+          applyLang(t.lang)
+        }, [t.lang])
+
+        return (
+          <TweaksPanel>
+            <TweakSection title="Brand">
+              <TweakColor
+                label="Accent color"
+                value={t.brand_color}
+                onChange={(v) => setTweak('brand_color', v)}
+                options={['#5b7fb3', '#3a5a78', '#7a9b6a', '#b08968']}
+              />
+            </TweakSection>
+            <TweakSection title="Language">
+              <TweakRadio
+                label="Locale"
+                value={t.lang}
+                onChange={(v) => setTweak('lang', v)}
+                options={[
+                  { value: 'en', label: 'English' },
+                  { value: 'sv', label: 'Svenska' },
+                ]}
+              />
+            </TweakSection>
+          </TweaksPanel>
+        )
+      }
+
+      const tweaksMount = document.createElement('div')
+      document.body.appendChild(tweaksMount)
+      ReactDOM.createRoot(tweaksMount).render(<TweaksApp />)
+    </script>
+  </body>
+</html>
