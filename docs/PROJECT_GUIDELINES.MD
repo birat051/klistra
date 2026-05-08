@@ -47,7 +47,9 @@ src/
     └── index.ts
 
 app/
-├── page.tsx                  ← renders <LandingPage /> from src/modules/landing
+├── page.tsx                  ← redirects `/` → `/en`
+├── [locale]/
+│   └── page.tsx              ← SSG landing: `KlistraLandingDocument` with `locale`
 ├── layout.tsx
 ├── dashboard/
 │   └── page.tsx              ← renders <DashboardPage /> from src/modules/dashboard

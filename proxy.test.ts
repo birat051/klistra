@@ -30,18 +30,27 @@ describe('proxy', () => {
     getAuthTokenMock.mockReset()
   })
 
-  it('Unauthenticated request to `/dashboard` redirects to `/`', async () => {
+  it('Unauthenticated request to `/dashboard` redirects to `/en`', async () => {
     getAuthTokenMock.mockResolvedValue(null)
     const request = new NextRequest(new URL(`${base}/dashboard`))
     const response = await proxy(request)
 
     expect(response.status).toBe(307)
-    expect(response.headers.get('location')).toBe(`${base}/`)
+    expect(response.headers.get('location')).toBe(`${base}/en`)
   })
 
   it('Authenticated request to `/` redirects to `/dashboard`', async () => {
     getAuthTokenMock.mockResolvedValue(decodedToken())
     const request = new NextRequest(new URL(`${base}/`))
+    const response = await proxy(request)
+
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toBe(`${base}/dashboard`)
+  })
+
+  it('Authenticated request to `/en` redirects to `/dashboard`', async () => {
+    getAuthTokenMock.mockResolvedValue(decodedToken())
+    const request = new NextRequest(new URL(`${base}/en`))
     const response = await proxy(request)
 
     expect(response.status).toBe(307)
@@ -63,10 +72,34 @@ describe('proxy', () => {
 
     expect(response.status).toBe(200)
   })
+
+  it('Unauthenticated request to `/login` passes through', async () => {
+    getAuthTokenMock.mockResolvedValue(null)
+    const request = new NextRequest(new URL(`${base}/login`))
+    const response = await proxy(request)
+
+    expect(response.status).toBe(200)
+  })
+
+  it('Authenticated request to `/login` redirects to `/dashboard`', async () => {
+    getAuthTokenMock.mockResolvedValue(decodedToken())
+    const request = new NextRequest(new URL(`${base}/login`))
+    const response = await proxy(request)
+
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toBe(`${base}/dashboard`)
+  })
 })
 
 describe('proxy config', () => {
-  it('exports matcher for landing, dashboard, and room routes', () => {
-    expect(config.matcher).toEqual(['/', '/dashboard/:path*', '/room/:path*'])
+  it('exports matcher for landing locales, login, dashboard, and room routes', () => {
+    expect(config.matcher).toEqual([
+      '/',
+      '/en',
+      '/sv',
+      '/login',
+      '/dashboard/:path*',
+      '/room/:path*',
+    ])
   })
 })
