@@ -54,7 +54,7 @@ app/
 └── room/
     └── [id]/
         └── page.tsx          ← renders <CanvasPage /> from src/modules/canvas
-middleware.ts                 ← auth routing guard — project root
+proxy.ts                      ← auth routing guard (Next.js Proxy) — project root
 ```
 
 ### What goes where
@@ -394,23 +394,25 @@ export default function Page() {
 
 ---
 
-## 5. Middleware
+## 5. Proxy (auth routing)
 
-`middleware.ts` lives at the project root (next to `package.json`). It is the single location for auth-based routing. Do not add auth checks inside page files or layouts.
+Next.js renamed the root `middleware` file convention to **`proxy`** ([docs](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)). `proxy.ts` lives at the project root (next to `package.json`). It is the single location for auth-based routing. Do not add auth checks inside page files or layouts.
 
 ### 5.1 Structure
 
 ```ts
-// middleware.ts
+// proxy.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthToken } from '@/common/utils/get-auth-token'
 
-const PROTECTED_PATHS = ['/dashboard', '/room']
+const PROTECTED_PREFIXES = ['/dashboard', '/room'] as const
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = await getAuthToken(request)
-  const isProtected = PROTECTED_PATHS.some((p) => pathname.startsWith(p))
+  const isProtected = PROTECTED_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  )
 
   // Unauthenticated user hitting a protected route → landing page
   if (isProtected && !token) {
@@ -451,8 +453,8 @@ export async function getAuthToken(request: NextRequest): Promise<DecodedIdToken
 
 ### 5.3 Rules
 
-- Middleware must not import from `src/modules/` — only from `src/common/`.
-- Keep middleware fast. No Firestore reads, no external fetches. Token verification only.
+- Proxy must not import from `src/modules/` — only from `src/common/`.
+- Keep the proxy fast. No Firestore reads, no external fetches. Token verification only.
 - The `matcher` config must be kept in sync with any new protected routes.
 
 ---
@@ -622,7 +624,7 @@ ydoc.getMap('ui').set('selectedNoteId', id)
 useCanvasStore.getState().setSelectedNote(id)
 ```
 
-Zustand stores are Client-side only. Never instantiate or import a Zustand store in a Server Component or in `middleware.ts`.
+Zustand stores are Client-side only. Never instantiate or import a Zustand store in a Server Component or in `proxy.ts`.
 
 ### 8.2 Zustand slices — one store per module
 
@@ -891,13 +893,13 @@ vi.mock('@/common/services/firebase', () => ({
 // Do NOT mock format-timestamp inside the same test — test the real function
 ```
 
-### 13.5 Testing middleware
+### 13.5 Testing proxy
 
-Middleware runs in the Next.js Edge Runtime. Test it by constructing a real `NextRequest` and asserting on the returned `NextResponse`.
+Test the exported `proxy` handler by constructing a real `NextRequest` and asserting on the returned `NextResponse`. (Runtime defaults to the Edge Runtime unless you opt into Node; avoid Firebase Admin in Edge-only deployments.)
 
 ```ts
-// middleware.test.ts
-import { middleware } from '../middleware'
+// proxy.test.ts (project root, beside proxy.ts)
+import { proxy } from './proxy'
 import { NextRequest } from 'next/server'
 
 vi.mock('@/common/utils/get-auth-token', () => ({
@@ -907,7 +909,7 @@ vi.mock('@/common/utils/get-auth-token', () => ({
 it('redirects unauthenticated user from /dashboard to /', async () => {
   vi.mocked(getAuthToken).mockResolvedValue(null)
   const req = new NextRequest('http://localhost/dashboard')
-  const res = await middleware(req)
+  const res = await proxy(req)
   expect(res.status).toBe(307)
   expect(res.headers.get('location')).toBe('http://localhost/')
 })
@@ -915,7 +917,7 @@ it('redirects unauthenticated user from /dashboard to /', async () => {
 it('redirects authenticated user from / to /dashboard', async () => {
   vi.mocked(getAuthToken).mockResolvedValue({ uid: 'user-1' } as DecodedIdToken)
   const req = new NextRequest('http://localhost/')
-  const res = await middleware(req)
+  const res = await proxy(req)
   expect(res.status).toBe(307)
   expect(res.headers.get('location')).toBe('http://localhost/dashboard')
 })
@@ -1006,7 +1008,7 @@ Before marking any task `- [x]`, confirm:
 - [ ] No `any` types introduced (TypeScript strict mode passes)
 - [ ] No cross-module imports introduced (only `common/` imports across modules)
 - [ ] No Server Component accidentally marked `'use client'`
-- [ ] No Zustand store imported in a Server Component or middleware
+- [ ] No Zustand store imported in a Server Component or proxy
 
 ### 14.4 Example — correctly completed task entry
 
@@ -1037,7 +1039,7 @@ Sentence case, present tense, no full stop.
 feat(dashboard): add collaborating section to dashboard page
 feat(landing): build hero and features sections from designs
 fix(canvas): prevent note creation when clicking on existing note
-test(auth): add middleware redirect tests
+test(auth): add proxy redirect tests
 refactor(common): move format-timestamp to common utils
 chore(deps): update yjs to 13.6.14
 docs(readme): add sync hierarchy diagram
@@ -1085,7 +1087,7 @@ Use the module name: `landing`, `dashboard`, `canvas`, `auth`, `room`, `common`,
 | Adding `'use client'` to every component        | Opts out of server rendering for the entire subtree       | Add `'use client'` only when hooks, events, or browser APIs are needed  |
 | Putting business logic in `app/` page files     | Mixes routing concerns with application logic             | Keep `app/**/page.tsx` thin; import from `src/modules/`                 |
 | Fetching data client-side when server can do it | Adds a waterfall, exposes credentials, delays first paint | Fetch in Server Components; pass data as props                          |
-| Auth checks in page files or layouts            | Duplicates middleware logic and can be bypassed           | All auth routing lives in `middleware.ts` only                          |
+| Auth checks in page files or layouts            | Duplicates proxy routing logic and can be bypassed           | All auth routing lives in `proxy.ts` only                          |
 | Importing Zustand in a Server Component         | Zustand is client-only; this will throw at runtime        | Pass data as props from the server, or read state in a Client Component |
 | Writing to Firestore on every keystroke         | Destroys write budget, violates core spec constraint      | Debounce in Yjs observer; write on blur or 60s idle                     |
 | Storing Yjs state in Zustand                    | Creates two sources of truth                              | Read Yjs state directly via `use-y-doc`                                 |

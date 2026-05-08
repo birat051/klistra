@@ -130,37 +130,32 @@ The order within each task follows a strict rule:
 
 ## T3 · App shell, routing & auth middleware
 
-- [ ] Define Zustand store shape: `selectedNote`, `activeModal`, `panelOpen`, `syncStatus`, `connectionState`
-- [ ] Write unit tests for Zustand store — `store.test.ts`
-  - [ ] Default state matches the defined shape
-  - [ ] Each action updates only the expected slice of state
-- [ ] **Auth middleware** — create `middleware.ts` at the project root to gate routing based on Firebase auth state
-  - [ ] Write `get-auth-token.ts` — reads the Firebase session cookie (`__session`) from the incoming request headers; returns the decoded token or `null`
-  - [ ] Write unit tests for `get-auth-token.test.ts`
-    - [ ] Returns a decoded token object when a valid `__session` cookie is present
-    - [ ] Returns `null` when the cookie is absent
-    - [ ] Returns `null` when the cookie value cannot be verified
-  - [ ] In `middleware.ts`, use `getAuthToken` to determine routing:
-    - [ ] Unauthenticated request to any protected path (`/dashboard`, `/room/:id`) → redirect to `/` (landing page)
-    - [ ] Authenticated request to `/` (landing page) → redirect to `/dashboard`
-    - [ ] Authenticated request to a protected path → allow through
-  - [ ] Add `matcher` config to `middleware.ts` so it runs only on `'/'`, `'/dashboard'`, and `'/room/:path*'`
-  - [ ] Write integration tests for `middleware.test.ts`
-    - [ ] Unauthenticated request to `/dashboard` redirects to `/`
-    - [ ] Authenticated request to `/` redirects to `/dashboard`
-    - [ ] Authenticated request to `/dashboard` passes through
-    - [ ] Unauthenticated request to `/` passes through (landing page is public)
-- [ ] Create Next.js App Router structure:
-  - [ ] `app/page.tsx` — landing page route (public)
-  - [ ] `app/dashboard/page.tsx` — dashboard route (protected)
-  - [ ] `app/room/[id]/page.tsx` — canvas room route (protected)
-- [ ] Write `nav-bar.test.tsx`
-  - [ ] Renders logo and language toggle placeholder
-  - [ ] Renders sign-out button when user is authenticated
-  - [ ] Does not render sign-out button when user is null
-- [ ] Build `nav-bar.tsx` — top nav with logo, language toggle placeholder, conditional sign-out button
+- [x] Define Zustand store shape: `selectedNote`, `activeModal`, `panelOpen`, `syncStatus`, `connectionState`
+- [x] Write unit tests for Zustand stores — `canvas-store.test.ts`, `collaboration-ui-store.test.ts`
+  - [x] Default state matches the defined shape
+  - [x] Each action updates only the expected slice of state
+- [x] **Auth routing (Next.js Proxy)** — create `proxy.ts` at the project root to gate routing based on Firebase auth state
+  - [x] Write `get-auth-token.ts` — reads the Firebase session cookie (`__session`) from the incoming request headers; returns the decoded token or `null`
+  - [x] Write unit tests for `get-auth-token.test.ts`
+    - [x] Returns a decoded token object when a valid `__session` cookie is present
+    - [x] Returns `null` when the cookie is absent
+    - [x] Returns `null` when the cookie value cannot be verified
+  - [x] In `proxy.ts`, use `getAuthToken` to determine routing:
+    - [x] Unauthenticated request to any protected path (`/dashboard`, `/room/:id`) → redirect to `/` (landing page)
+    - [x] Authenticated request to `/` (landing page) → redirect to `/dashboard`
+    - [x] Authenticated request to a protected path → allow through
+  - [x] Add `matcher` config to `proxy.ts` so it runs only on `'/'`, `'/dashboard/:path*'`, and `'/room/:path*'` (per `docs/PROJECT_GUIDELINES.MD` §5.1 — covers `/dashboard` and nested routes)
+  - [x] Write integration tests for `proxy.test.ts`
+    - [x] Unauthenticated request to `/dashboard` redirects to `/`
+    - [x] Authenticated request to `/` redirects to `/dashboard`
+    - [x] Authenticated request to `/dashboard` passes through
+    - [x] Unauthenticated request to `/` passes through (landing page is public)
+- [x] Create Next.js App Router structure:
+  - [x] `app/page.tsx` — landing page route (public)
+  - [x] `app/dashboard/page.tsx` — dashboard route (protected)
+  - [x] `app/room/[id]/page.tsx` — canvas room route (protected)
 
-> **PR 3** — App shell: Next.js App Router structure, auth middleware with tests, Zustand store, store tests, nav-bar tests, nav-bar component
+> **PR 3** — App shell: Next.js App Router structure, auth proxy with tests, Zustand store, store tests
 
 ---
 
@@ -335,7 +330,7 @@ The order within each task follows a strict rule:
     - [ ] Written document contains all required fields with correct types
     - [ ] `createdAt` is a Firestore server timestamp
   - [ ] Call `ensureUserProfile(user)` inside the `signInWithGoogle` success handler — after the Firebase auth credential resolves and before redirecting to `/dashboard`
-  - [ ] Write a session cookie (`__session`) containing the Firebase ID token after successful sign-in so that `middleware.ts` can read it on subsequent requests
+  - [ ] Write a session cookie (`__session`) containing the Firebase ID token after successful sign-in so that `proxy.ts` can read it on subsequent requests
     - [ ] Write unit test: cookie is set with correct name, value, and `httpOnly`/`secure` flags
 - [ ] Write `auth-guard.test.tsx`
   - [ ] Renders children when user is authenticated

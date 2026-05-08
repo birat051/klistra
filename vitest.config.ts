@@ -14,7 +14,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test-setup.ts'],
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'proxy.test.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'html'],
@@ -31,6 +31,7 @@ export default defineConfig({
         'src/**/*.test.ts',
         'src/**/*.test.tsx',
         'src/test-setup.ts',
+        'proxy.test.ts',
       ],
     },
   },
