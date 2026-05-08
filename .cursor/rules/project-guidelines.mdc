@@ -10,11 +10,11 @@ Treat **[`docs/PROJECT_GUIDELINES.MD`](docs/PROJECT_GUIDELINES.MD)** as binding 
 ## Non‑negotiable highlights
 
 - **Layout:** Page code lives in `src/modules/<module>/` (`components/`, `store/`, `utils/`, `services/`, `api/`). Shared code → `src/common/`. **`app/`** holds only route shells (page, layout, loading, error) — no business logic or feature components there.
-- **Imports:** No cross-module imports; share via `src/common/`. Middleware imports only from `src/common/`.
+- **Imports:** No cross-module imports; share via `src/common/`. The root **`proxy`** handler imports only from `src/common/`.
 - **Naming:** Kebab-case files; interfaces `I_SCOPE_Name`, enums `E_SCOPE_Name`; components are **named exports** (default only for Next.js `page.tsx` / `layout.tsx`).
 - **Server vs client:** Server Components by default; `'use client'` only when hooks, events, or browser APIs are required; push the boundary to leaves.
 - **State:** Yjs for collaborative data; Zustand for ephemeral UI — never mix.
-- **Auth routing:** Only in root **`middleware.ts`**, not in pages/layouts.
+- **Auth routing:** Only in root **`proxy.ts`** (Next.js Proxy), not in pages/layouts.
 - **Types:** No `any`.
 - **Tasks / checklist:** Mark `docs/TASK_CHECKLIST.MD` items done only per **§14** (verified execution; full gate for a task = subtasks + tests + lint).
 
