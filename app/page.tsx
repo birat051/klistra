@@ -1,5 +1,7 @@
-import { LandingPage } from '@/modules/landing/components/landing-page'
+import { redirect } from 'next/navigation'
 
-export default function Page() {
-  return <LandingPage />
+import { LANDING_DEFAULT_LOCALE } from '@/modules/landing/landing-i18n'
+
+export default function HomePage() {
+  redirect(`/${LANDING_DEFAULT_LOCALE}`)
 }

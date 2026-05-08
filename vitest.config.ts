@@ -32,6 +32,7 @@ export default defineConfig({
         'src/**/*.test.tsx',
         'src/test-setup.ts',
         'proxy.test.ts',
+        'src/modules/landing/**',
       ],
     },
   },

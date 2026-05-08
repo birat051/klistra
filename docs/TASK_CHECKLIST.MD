@@ -161,19 +161,26 @@ The order within each task follows a strict rule:
 
 ## T4 · Landing page
 
-- [ ] Audit `/designs/` — review all design files in `/designs/` and note the exact sections, components, colour tokens, and typography used in the landing page designs before writing any code
-- [ ] Write `landing-page.test.tsx`
-  - [ ] Hero section renders the primary headline and CTA button
-  - [ ] CTA button links to the sign-in flow
-  - [ ] Feature sections render the correct number of feature cards
-  - [ ] Framer Motion wrappers do not break rendering in a test environment (mock `framer-motion` if needed)
-- [ ] Build `app/page.tsx` (landing page) — implement pixel-faithful to `/designs/` landing page designs; sections to include at minimum: hero, features, and call-to-action footer
-  - [ ] Match layout, spacing, and colour tokens exactly as specified in `/designs/`
-  - [ ] All animations use Framer Motion; verify they render correctly in the browser
-  - [ ] Page is fully responsive across mobile, tablet, and desktop breakpoints as shown in `/designs/`
-  - [ ] CTA button triggers the Google sign-in flow
+- [x] Audit `/design/` — review all design files in `/design/` and note the exact sections, components, colour tokens, and typography used in the landing page designs before writing any code
+  - **Sources:** `design/Landing Page.html` (document structure, nav/hero/features/etc., inline styles for feature mini-visuals, i18n EN/SV, Google CTA wiring); `design/styles.css` (global tokens + component styles); `design/hero-demo.css` + `design/hero-demo.jsx` (animated hero canvas); `design/tweaks-panel.jsx` (floating prototype panel — brand accent + locale; omit or replace in production).
+  - **Page sections (top to bottom):** sticky `site-header` → `hero` (`hero__copy` + `hero__demo` mount) → `section section--alt` “How it works” (`#how`) → `section` “Features” (`#features`, 2×2 `article.feature`) → `section section--alt` “Use cases” (`#cases`, 3 `article.case`) → `cta-band` → `site-footer`.
+  - **Colour tokens (`styles.css` `:root` and usage):** `--paper`, `--paper-2`, `--ink`, `--ink-2`, `--ink-3`, `--rule`, `--rule-2`, `--brand`, `--brand-soft`, `--brand-ink`, `--note-mist`, `--note-sand`, `--note-sage`, `--note-rose`, `--note-cream`, `--note-slate`, `--shadow-note`, `--shadow-card`. Additional literals: Google “G” paths `#EA4335`, `#4285F4`, `#FBBC05`, `#34A853`; assorted `oklch(...)` in CSS (flow pills, dots, grain, modals, hero-demo). Default runtime brand tweak: `#5b7fb3` (`TWEAKS` in HTML) mapped via `applyBrand` to `--brand`, `--brand-soft`, `--brand-ink`.
+  - **Typography:** Google Fonts in `Landing Page.html` — **Newsreader** (display, italic + opsz 6..72, wght 300–600), **Geist** (UI, 300–700), **Geist Mono** (mono, 400–600). CSS variables: `--font-display`, `--font-ui`, `--font-mono`. Body: 16px / 1.5, `font-ui`. Key scales: hero `h1` `clamp(44px, 5.6vw, 72px)`; section `h2` `clamp(34px, 3.8vw, 48px)`; CTA `h2` `clamp(38px, 4.4vw, 56px)`; lede 19px; section sub 18px; eyebrows mono 12px uppercase; etc.
+  - **Breakpoints:** primary layout in `@media (max-width: 960px)` — hero/how single column, features 1 col, cases 1 col, `nav` hidden.
+- [x] Write `klistra-landing-document.test.tsx`
+  - [x] Hero section renders the primary headline and CTA button
+  - [x] CTA button links to the sign-in flow
+  - [x] Feature sections render the correct number of feature cards
+  - [x] Framer Motion works in Vitest via `IntersectionObserver` stub in `src/test-setup.ts` (`whileInView`; no `framer-motion` mock required)
+- [ ] Build `app/page.tsx` (landing page) — implement pixel-faithful to `/design/` landing page designs; sections to include at minimum: hero, features, and call-to-action footer
+  - [x] Match layout, spacing, and colour tokens exactly as specified in `/design/`
+  - [x] All animations use Framer Motion; verify they render correctly in the browser (`next build`; `/en` returns 200 under `next start`; manual pass: scroll sections, hero demo, offline toggle on `/en` and `/sv`)
+  - [x] Page is fully responsive across mobile, tablet, and desktop breakpoints as shown in `/design/` (primary `@media (max-width: 960px)` in `design/styles.css` → `klistra-landing.css`; `viewport` in `app/layout.tsx` matches `Landing Page.html`)
+  - [x] CTA button triggers the Google sign-in flow (`/login` → Firebase `signInWithPopup` → `POST /api/auth/session` → `__session` cookie → `/dashboard`)
+- [x] Serve markdown for AI and agent crawlers — HTTP-accessible markdown (\`text/markdown\` or static files) summarising the product and repo for tools that fetch the live site (e.g. \`llms.txt\`, \`/llms-full.txt\`, or a dedicated route; follow common crawler conventions) — **implemented:** \`/llms.txt\`, \`/llms-full.txt\` (SSG-friendly route handlers; copy in \`src/common/content/crawler-markdown.ts\`)
+- [x] SEO for the landing page — metadata (title, description, canonical, Open Graph as needed), `sitemap.xml` via Next.js `MetadataRoute` (or equivalent), and `robots.txt` referencing the sitemap where appropriate — **implemented:** `generateMetadata` on `app/[locale]/page.tsx`, `metadataBase` + defaults in `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `NEXT_PUBLIC_SITE_URL` / `VERCEL_URL` via `src/common/utils/site-origin.ts`
 
-> **PR 4** — Landing page: tests then pixel-faithful implementation from `/designs/` with Framer Motion animations
+> **PR 4** — Landing page: tests then pixel-faithful implementation from `/design/` with Framer Motion animations; AI-crawler markdown; SEO (metadata, sitemap, robots)
 
 ---
 
@@ -203,9 +210,9 @@ The order within each task follows a strict rule:
   - [ ] Renders one `DocumentCard` per owned document under "My documents"
   - [ ] Renders one `DocumentCard` per document under "Collaborating"
   - [ ] "Collaborating" section is hidden when the list is empty
-- [ ] Build `app/dashboard/page.tsx` — "My documents" and "Collaborating" sections, empty states; reference `/designs/` for layout, spacing, and visual style
+- [ ] Build `app/dashboard/page.tsx` — "My documents" and "Collaborating" sections, empty states; reference `/design/` for layout, spacing, and visual style
 
-> **PR 5** — Dashboard UI: format-timestamp util, all tests, then document-card, create-document-modal, dashboard-page (styled from `/designs/`)
+> **PR 5** — Dashboard UI: format-timestamp util, all tests, then document-card, create-document-modal, dashboard-page (styled from `/design/`)
 
 ---
 
