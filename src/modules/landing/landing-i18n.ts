@@ -2,14 +2,20 @@ import {
   SITE_DEFAULT_DESCRIPTION,
   SITE_DEFAULT_TITLE,
 } from '@/common/content/site-default-metadata'
+import {
+  KLISTRA_DEFAULT_LOCALE,
+  KLISTRA_LOCALES,
+  isKlistraLocale,
+  type IKlistraLocale,
+} from '@/common/i18n/klistra-locales'
 
-export const LANDING_LOCALES = ['en', 'sv'] as const
-export type ILandingLocale = (typeof LANDING_LOCALES)[number]
+export const LANDING_LOCALES = KLISTRA_LOCALES
+export type ILandingLocale = IKlistraLocale
 
-export const LANDING_DEFAULT_LOCALE: ILandingLocale = 'en'
+export const LANDING_DEFAULT_LOCALE = KLISTRA_DEFAULT_LOCALE
 
 export function isLandingLocale(value: string): value is ILandingLocale {
-  return (LANDING_LOCALES as readonly string[]).includes(value)
+  return isKlistraLocale(value)
 }
 
 /** `<title>` and meta description for `app/[locale]` (design-aligned English title from `Landing Page.html`). */

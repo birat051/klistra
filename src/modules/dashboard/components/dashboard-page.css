@@ -1,0 +1,119 @@
+/* Dashboard page shell — ported from design/dashboard.css (subset: .dash, .dash-main, sections, grid, empty) */
+
+[data-klistra-dashboard-page] {
+  --paper: oklch(98% 0.005 240);
+  --paper-2: oklch(96% 0.008 240);
+  --ink: oklch(22% 0.02 250);
+  --ink-2: oklch(38% 0.02 250);
+  --ink-3: oklch(55% 0.015 250);
+  --rule: oklch(88% 0.01 240);
+  --rule-2: oklch(92% 0.008 240);
+  --brand: #5b7fb3;
+  --brand-soft: color-mix(in oklch, #5b7fb3 14%, white);
+  --brand-ink: color-mix(in oklch, #5b7fb3 70%, black 30%);
+  --note-mist: #cfe0ec;
+  --note-cream: #f1e7d0;
+  --note-sage: #cfdcc9;
+  --font-display: var(--font-newsreader), 'Times New Roman', serif;
+  --font-ui: var(--font-geist-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+
+[data-klistra-dashboard-page] .dash-main {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 36px 28px 120px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+[data-klistra-dashboard-page] .dash-section {
+  margin-bottom: 56px;
+}
+
+[data-klistra-dashboard-page] .dash-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-2);
+}
+
+[data-klistra-dashboard-page] .dash-section__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+}
+
+[data-klistra-dashboard-page] .dash-section__count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+[data-klistra-dashboard-page] .dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+[data-klistra-dashboard-page] .dash-empty {
+  border: 1px dashed var(--rule);
+  border-radius: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  background: var(--paper);
+}
+
+[data-klistra-dashboard-page] .dash-empty__art {
+  width: 160px;
+  height: 110px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+[data-klistra-dashboard-page] .dash-empty__art .note {
+  font-size: 9px;
+  padding: 8px 10px;
+  border-radius: 3px 4px 3px 3.5px;
+  position: absolute;
+  box-shadow:
+    0 1px 1px rgba(20, 30, 50, 0.04),
+    0 8px 18px -6px rgba(20, 30, 50, 0.12);
+}
+
+[data-klistra-dashboard-page] .dash-empty__art .note .h {
+  font-family: var(--font-display);
+  font-size: 10px;
+}
+
+[data-klistra-dashboard-page] .dash-empty h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+[data-klistra-dashboard-page] .dash-empty p {
+  color: var(--ink-2);
+  font-size: 14px;
+  margin: 0;
+}

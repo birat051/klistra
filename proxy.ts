@@ -2,26 +2,62 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 import { getAuthToken } from '@/common/utils/get-auth-token'
 
-const PROTECTED_PREFIXES = ['/dashboard', '/room'] as const
-
 /** Public entry paths for the marketing landing (locale segments + legacy `/`). */
 const LANDING_ENTRY_PATHNAMES = new Set(['/', '/en', '/sv'])
+
+function isProtectedPathname(pathname: string): boolean {
+  if (pathname === '/room' || pathname.startsWith('/room/')) {
+    return true
+  }
+  if (pathname === '/en/dashboard' || pathname.startsWith('/en/dashboard/')) {
+    return true
+  }
+  if (pathname === '/sv/dashboard' || pathname.startsWith('/sv/dashboard/')) {
+    return true
+  }
+  return false
+}
+
+function unauthenticatedLandingPath(pathname: string): '/en' | '/sv' {
+  if (pathname === '/sv' || pathname.startsWith('/sv/')) {
+    return '/sv'
+  }
+  return '/en'
+}
+
+function authenticatedDashboardPathFromLanding(
+  pathname: string,
+): '/en/dashboard' | '/sv/dashboard' {
+  if (pathname === '/sv' || pathname.startsWith('/sv/')) {
+    return '/sv/dashboard'
+  }
+  return '/en/dashboard'
+}
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = await getAuthToken(request)
-  const isProtected = PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))
+
+  if (pathname === '/dashboard' || pathname.startsWith('/dashboard/')) {
+    const suffix = pathname === '/dashboard' ? '' : pathname.slice('/dashboard'.length)
+    return NextResponse.redirect(new URL(`/en/dashboard${suffix}`, request.url))
+  }
+
+  const isProtected = isProtectedPathname(pathname)
 
   if (isProtected && !token) {
-    return NextResponse.redirect(new URL('/en', request.url))
+    const dest = unauthenticatedLandingPath(pathname)
+    return NextResponse.redirect(new URL(dest, request.url))
   }
 
   if (LANDING_ENTRY_PATHNAMES.has(pathname) && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    const dest =
+      pathname === '/' ? '/en/dashboard' : authenticatedDashboardPathFromLanding(pathname)
+    return NextResponse.redirect(new URL(dest, request.url))
   }
 
   if (pathname === '/login' && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    return NextResponse.redirect(new URL('/en/dashboard', request.url))
   }
 
   const htmlLang = pathname === '/sv' || pathname.startsWith('/sv/') ? 'sv' : 'en'
@@ -31,5 +67,14 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/en', '/sv', '/login', '/dashboard/:path*', '/room/:path*'],
+  matcher: [
+    '/',
+    '/en',
+    '/sv',
+    '/login',
+    '/dashboard/:path*',
+    '/en/dashboard/:path*',
+    '/sv/dashboard/:path*',
+    '/room/:path*',
+  ],
 }

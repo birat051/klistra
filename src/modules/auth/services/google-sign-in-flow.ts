@@ -38,5 +38,5 @@ export async function signInWithGoogleAndEstablishSession(): Promise<void | TGoo
     return 'session_exchange_failed'
   }
 
-  window.location.assign('/dashboard')
+  window.location.assign(`/${document.documentElement.lang === 'sv' ? 'sv' : 'en'}/dashboard`)
 }

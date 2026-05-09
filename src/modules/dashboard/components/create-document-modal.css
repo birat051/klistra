@@ -1,0 +1,134 @@
+/* Create-document modal — ported from design/dashboard.css (.modal*) */
+
+[data-klistra-create-document-modal] {
+  --paper: oklch(98% 0.005 240);
+  --paper-2: oklch(96% 0.008 240);
+  --ink: oklch(22% 0.02 250);
+  --ink-2: oklch(38% 0.02 250);
+  --ink-3: oklch(55% 0.015 250);
+  --rule: oklch(88% 0.01 240);
+  --rule-2: oklch(92% 0.008 240);
+  --brand: #5b7fb3;
+  --brand-soft: color-mix(in oklch, #5b7fb3 14%, white);
+  --brand-ink: color-mix(in oklch, #5b7fb3 70%, black 30%);
+  --font-display: var(--font-newsreader), 'Times New Roman', serif;
+  --font-ui: var(--font-geist-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: oklch(20% 0.02 250 / 0.42);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: klistra-create-modal-fadein 0.2s ease;
+}
+
+@keyframes klistra-create-modal-fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+[data-klistra-create-document-modal] .modal__card {
+  background: var(--paper);
+  border: 1px solid var(--rule-2);
+  border-radius: 18px;
+  padding: 30px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 30px 80px -20px rgba(20, 30, 50, 0.45);
+}
+
+[data-klistra-create-document-modal] h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+[data-klistra-create-document-modal] .modal__sub {
+  color: var(--ink-2);
+  font-size: 14px;
+  margin: 0 0 22px;
+}
+
+[data-klistra-create-document-modal] .modal__input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--rule);
+  font: inherit;
+  font-size: 15px;
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+[data-klistra-create-document-modal] .modal__input:focus {
+  outline: 2px solid var(--brand-soft);
+  border-color: var(--brand);
+}
+
+[data-klistra-create-document-modal] .modal__colors {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 22px;
+}
+
+[data-klistra-create-document-modal] .modal__swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background-clip: padding-box;
+  position: relative;
+}
+
+[data-klistra-create-document-modal] .modal__swatch[aria-pressed='true'] {
+  border-color: var(--ink);
+}
+
+[data-klistra-create-document-modal] .modal__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+[data-klistra-create-document-modal] .modal__actions button {
+  padding: 10px 18px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+[data-klistra-create-document-modal] .modal__actions .ghost {
+  background: none;
+  border-color: var(--rule);
+  color: var(--ink-2);
+}
+
+[data-klistra-create-document-modal] .modal__actions .ghost:hover {
+  background: var(--paper-2);
+}
+
+[data-klistra-create-document-modal] .modal__actions .primary {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+[data-klistra-create-document-modal] .modal__actions .primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

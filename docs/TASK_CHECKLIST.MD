@@ -186,31 +186,31 @@ The order within each task follows a strict rule:
 
 ## T5 · Dashboard UI
 
-- [ ] Write `format-timestamp.ts` — formats a Firestore `Timestamp` into a human-readable relative string
-- [ ] Write unit tests for `format-timestamp.test.ts`
-  - [ ] Returns "just now" for timestamps within the last minute
-  - [ ] Returns "X minutes ago" for timestamps within the last hour
-  - [ ] Returns a formatted date string for timestamps older than 24 hours
-- [ ] Write `document-card.test.tsx`
-  - [ ] Renders document name, owner avatar initials, and formatted timestamp
-  - [ ] Double-clicking the label puts it into rename mode
-  - [ ] Pressing Escape in rename mode cancels and restores the original name
-  - [ ] Blurring the rename input calls `onRename` with the new value
-  - [ ] Delete button triggers the confirmation dialog
-  - [ ] Confirming delete calls `onDelete` with the correct roomId
-- [ ] Build `document-card.tsx`
-- [ ] Write `create-document-modal.test.tsx`
-  - [ ] Renders with an empty name input and disabled submit button
-  - [ ] Enables submit button once the name field is non-empty
-  - [ ] Calls `onCreate` with the trimmed name on submit
-  - [ ] Closes and resets on Escape key press
-- [ ] Build `create-document-modal.tsx`
-- [ ] Write `dashboard-page.test.tsx`
-  - [ ] Shows empty state when the owned document list is empty
-  - [ ] Renders one `DocumentCard` per owned document under "My documents"
-  - [ ] Renders one `DocumentCard` per document under "Collaborating"
-  - [ ] "Collaborating" section is hidden when the list is empty
-- [ ] Build `app/dashboard/page.tsx` — "My documents" and "Collaborating" sections, empty states; reference `/design/` for layout, spacing, and visual style
+- [x] Write `format-timestamp.ts` — formats a Firestore `Timestamp` into a human-readable relative string — **implemented:** `src/common/utils/format-timestamp.ts`
+- [x] Write unit tests for `format-timestamp.test.ts` ✓ 3/3 passing
+  - [x] Returns "just now" for timestamps within the last minute
+  - [x] Returns "X minutes ago" for timestamps within the last hour
+  - [x] Returns a formatted date string for timestamps older than 24 hours
+- [x] Write `document-card.test.tsx` ✓ 6/6 passing
+  - [x] Renders document name, owner avatar initials, and formatted timestamp
+  - [x] Double-clicking the label puts it into rename mode
+  - [x] Pressing Escape in rename mode cancels and restores the original name
+  - [x] Blurring the rename input calls `onRename` with the new value
+  - [x] Delete button triggers the confirmation dialog
+  - [x] Confirming delete calls `onDelete` with the correct roomId
+- [x] Build `document-card.tsx` — **implemented:** `src/modules/dashboard/components/document-card.tsx`
+- [x] Write `create-document-modal.test.tsx` ✓ 4/4 passing
+  - [x] Renders with an empty name input and disabled submit button
+  - [x] Enables submit button once the name field is non-empty
+  - [x] Calls `onCreate` with the trimmed name on submit
+  - [x] Closes and resets on Escape key press
+- [x] Build `create-document-modal.tsx` — **implemented:** `src/modules/dashboard/components/create-document-modal.tsx` + `create-document-modal.css` (from `design/dashboard.jsx` / `design/dashboard.css`)
+- [x] Write `dashboard-page.test.tsx` ✓ 4/4 passing — **implemented:** `dashboard-page.tsx` + `dashboard-page.css` (layout from `design/dashboard.css`: `.dash-main`, `.dash-section`, `.dash-grid`, `.dash-empty` / shared-empty note art)
+  - [x] Shows empty state when the owned document list is empty
+  - [x] Renders one `DocumentCard` per owned document under "My documents"
+  - [x] Renders one `DocumentCard` per document under "Collaborating"
+  - [x] "Collaborating" section is hidden when the list is empty
+- [x] Build `app/dashboard/page.tsx` — **implemented:** server `Page` (`getServerAuthToken`, `fetchOwnedRooms` / `fetchCollaboratingRooms`) → `DashboardLayout` (Server Component: chrome + `DashboardPage` + lists); client island `DashboardCreateFab` (FAB + `CreateDocumentModal`)
 
 > **PR 5** — Dashboard UI: format-timestamp util, all tests, then document-card, create-document-modal, dashboard-page (styled from `/design/`)
 
