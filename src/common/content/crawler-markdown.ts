@@ -11,7 +11,7 @@ Klistra is an offline-first collaborative sticky-note canvas: real-time sync bet
 ## On this host
 
 - Marketing / product overview (locales): \`/en\`, \`/sv\`
-- Google sign-in entry: \`/login\` → session cookie \`__session\` → \`/dashboard\`
+- Google sign-in entry: \`/login\` → session cookie \`__session\` → \`/en/dashboard\` or \`/sv/dashboard\` (matches \`<html lang>\`).
 - Collaborative rooms: \`/room/[id]\` (authenticated)
 
 ## Extended machine-readable summary
@@ -45,7 +45,7 @@ Design principle: **Firestore is memory and access control, not the live keystro
 | \`/\` | Redirects to default marketing locale (e.g. \`/en\`). |
 | \`/en\`, \`/sv\` | Static marketing landing (bilingual). |
 | \`/login\` | Google sign-in; establishes session then sends users to the app. |
-| \`/dashboard\` | Authenticated home for documents (protected). |
+| \`/en/dashboard\`, \`/sv/dashboard\` | Authenticated document home (protected; locale from path). Legacy \`/dashboard\` redirects to \`/en/dashboard\`. |
 | \`/room/[id]\` | Authenticated collaborative room / canvas (protected). |
 | \`/llms.txt\`, \`/llms-full.txt\` | **This** document family — markdown for crawlers and tools. |
 | \`/api/auth/session\` | API route: exchanges a verified Firebase **ID token** for the \`__session\` cookie (machine-oriented; not a human page). |

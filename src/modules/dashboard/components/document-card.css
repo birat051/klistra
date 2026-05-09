@@ -1,0 +1,204 @@
+/* Ported from design/dashboard.css (.doccard*) — dashboard document card */
+
+article.doccard {
+  /* Tokens (match design/styles.css + klistra-landing) so cards work outside full dashboard shell */
+  --paper: oklch(98% 0.005 240);
+  --paper-2: oklch(96% 0.008 240);
+  --ink: oklch(22% 0.02 250);
+  --ink-2: oklch(38% 0.02 250);
+  --ink-3: oklch(55% 0.015 250);
+  --rule: oklch(88% 0.01 240);
+  --rule-2: oklch(92% 0.008 240);
+  --brand: #5b7fb3;
+  --brand-soft: color-mix(in oklch, #5b7fb3 14%, white);
+  --brand-ink: color-mix(in oklch, #5b7fb3 70%, black 30%);
+  --note-mist: #cfe0ec;
+  --note-sand: #ecdfc6;
+  --note-sage: #cfdcc9;
+  --note-rose: #e7c9c9;
+  --note-cream: #f1e7d0;
+  --note-slate: #c8cdd6;
+  --font-display: var(--font-newsreader), 'Times New Roman', serif;
+  --font-ui: var(--font-geist-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
+
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--rule-2);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+article.doccard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px -22px rgba(20, 30, 50, 0.25);
+  border-color: oklch(82% 0.01 240);
+}
+
+.doccard__preview {
+  position: relative;
+  height: 170px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule-2);
+  overflow: hidden;
+}
+
+.doccard__preview-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.doccard__preview-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, oklch(92% 0.01 240) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(92% 0.01 240) 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity: 0.5;
+}
+
+.doccard__preview .note {
+  font-size: 8px;
+  padding: 6px 7px;
+  border-radius: 2px 3px 2px 2.5px;
+  box-shadow:
+    0 0.5px 1px rgba(20, 30, 50, 0.06),
+    0 4px 8px -3px rgba(20, 30, 50, 0.18);
+}
+
+.doccard__preview .note .h {
+  font-family: var(--font-display);
+  font-size: 8.5px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  color: oklch(22% 0.02 250);
+  line-height: 1.15;
+}
+
+.doccard__preview .note .b {
+  font-size: 7px;
+  line-height: 1.3;
+  color: oklch(30% 0.02 250);
+}
+
+.doccard__body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.doccard__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  cursor: text;
+  border-radius: 4px;
+}
+
+button.doccard__name {
+  font: inherit;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  text-align: left;
+  cursor: text;
+  display: block;
+}
+
+.doccard__name:focus {
+  outline: 2px solid var(--brand-soft);
+  outline-offset: 2px;
+}
+
+.doccard__name:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button.doccard__name:focus-visible {
+  outline: 2px solid var(--brand-soft);
+  outline-offset: 2px;
+}
+
+.doccard__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.doccard__meta time {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.doccard__owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.doccard__owner-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.doccard__owner-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  flex-shrink: 0;
+}
+
+.doccard__sep {
+  color: var(--ink-3);
+  opacity: 0.6;
+}
+
+.doccard__delete {
+  align-self: flex-end;
+  margin-top: 2px;
+  background: none;
+  border: 0;
+  padding: 6px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.doccard__delete:hover {
+  color: oklch(48% 0.14 25);
+}

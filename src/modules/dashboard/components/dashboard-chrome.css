@@ -1,0 +1,203 @@
+/* Top bar, greeting, FAB — ported from design/dashboard.css; scope matches dashboard-page.css root */
+
+[data-klistra-dashboard-page] .dashbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in oklch, var(--paper) 80%, transparent);
+  backdrop-filter: blur(12px) saturate(1.05);
+  border-bottom: 1px solid var(--rule-2);
+}
+
+[data-klistra-dashboard-page] .dashbar__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+[data-klistra-dashboard-page] .dashbar .brand {
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+[data-klistra-dashboard-page] .brand__mark {
+  width: 22px;
+  height: 22px;
+  background: var(--brand);
+  border-radius: 3px;
+  transform: rotate(-8deg);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.08),
+    0 6px 10px -4px rgba(20, 30, 50, 0.25);
+  position: relative;
+}
+
+[data-klistra-dashboard-page] .brand__mark::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+[data-klistra-dashboard-page] .brand__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+[data-klistra-dashboard-page] .dash-search {
+  flex: 1;
+  max-width: 460px;
+  position: relative;
+}
+
+[data-klistra-dashboard-page] .dash-search input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--paper-2);
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+[data-klistra-dashboard-page] .dash-search input::placeholder {
+  color: var(--ink-3);
+}
+
+[data-klistra-dashboard-page] .dash-search input:focus {
+  outline: 2px solid var(--brand-soft);
+  border-color: var(--brand);
+}
+
+[data-klistra-dashboard-page] .dash-search svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+[data-klistra-dashboard-page] .dash-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+[data-klistra-dashboard-page] .dash-sort:hover {
+  background: var(--paper-2);
+}
+
+[data-klistra-dashboard-page] .dashbar__right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+[data-klistra-dashboard-page] .user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: oklch(58% 0.13 245);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-ui);
+}
+
+[data-klistra-dashboard-page] .user-avatar:hover {
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+[data-klistra-dashboard-page] .dash-greet {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: -0.015em;
+  margin: 0 0 6px;
+}
+
+[data-klistra-dashboard-page] .dash-greet em {
+  font-style: italic;
+  color: var(--brand-ink);
+}
+
+[data-klistra-dashboard-page] .dash-sub {
+  color: var(--ink-2);
+  margin: 0 0 36px;
+  font-size: 15px;
+}
+
+[data-klistra-dashboard-page] .fab {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px 14px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow:
+    0 12px 30px -10px rgba(20, 30, 50, 0.45),
+    0 4px 8px rgba(20, 30, 50, 0.15);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+[data-klistra-dashboard-page] .fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -12px rgba(20, 30, 50, 0.5);
+}
+
+[data-klistra-dashboard-page] .fab__plus {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1;
+}
