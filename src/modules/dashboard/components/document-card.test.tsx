@@ -1,4 +1,3 @@
-import { Timestamp } from 'firebase/firestore'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
@@ -15,13 +14,13 @@ describe('DocumentCard', () => {
   it('renders document name, owner avatar initials, and formatted timestamp', () => {
     const now = new Date('2026-05-09T12:30:00.000Z')
     vi.useFakeTimers({ now })
-    const updatedAt = Timestamp.fromMillis(now.getTime() - 5 * MINUTE_MS)
+    const updatedAtMillis = now.getTime() - 5 * MINUTE_MS
     render(
       <DocumentCard
         roomId="room-1"
         name="Q2 Notes"
         ownerDisplayName="Jane Doe"
-        updatedAt={updatedAt}
+        updatedAtMillis={updatedAtMillis}
         onRename={vi.fn()}
         onDelete={vi.fn()}
       />,
@@ -38,7 +37,7 @@ describe('DocumentCard', () => {
         roomId="room-1"
         name="Q2 Notes"
         ownerDisplayName="Jane Doe"
-        updatedAt={Timestamp.fromMillis(Date.now())}
+        updatedAtMillis={Date.now()}
         onRename={vi.fn()}
         onDelete={vi.fn()}
       />,
@@ -53,7 +52,7 @@ describe('DocumentCard', () => {
         roomId="room-1"
         name="Original"
         ownerDisplayName="Jane Doe"
-        updatedAt={Timestamp.fromMillis(Date.now())}
+        updatedAtMillis={Date.now()}
         onRename={vi.fn()}
         onDelete={vi.fn()}
       />,
@@ -73,7 +72,7 @@ describe('DocumentCard', () => {
         roomId="room-1"
         name="Q2 Notes"
         ownerDisplayName="Jane Doe"
-        updatedAt={Timestamp.fromMillis(Date.now())}
+        updatedAtMillis={Date.now()}
         onRename={onRename}
         onDelete={vi.fn()}
       />,
@@ -92,7 +91,7 @@ describe('DocumentCard', () => {
         roomId="room-1"
         name="Q2 Notes"
         ownerDisplayName="Jane Doe"
-        updatedAt={Timestamp.fromMillis(Date.now())}
+        updatedAtMillis={Date.now()}
         onRename={vi.fn()}
         onDelete={vi.fn()}
       />,
@@ -109,7 +108,7 @@ describe('DocumentCard', () => {
         roomId="room-1"
         name="Q2 Notes"
         ownerDisplayName="Jane Doe"
-        updatedAt={Timestamp.fromMillis(Date.now())}
+        updatedAtMillis={Date.now()}
         onRename={vi.fn()}
         onDelete={onDelete}
       />,

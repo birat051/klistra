@@ -1,4 +1,3 @@
-import { Timestamp } from 'firebase/firestore'
 import { render, screen } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { describe, expect, it } from 'vitest'
@@ -6,10 +5,6 @@ import { describe, expect, it } from 'vitest'
 import { getDashboardCopy } from '@/modules/dashboard/dashboard-i18n'
 
 import { DashboardPage } from './dashboard-page'
-
-function ts(millis = Date.now()): Timestamp {
-  return Timestamp.fromMillis(millis)
-}
 
 const enCopy = getDashboardCopy('en')
 
@@ -44,7 +39,7 @@ describe('DashboardPage', () => {
             id: 'room-1',
             name: 'Q2 Retro',
             ownerDisplayName: 'Jane Doe',
-            updatedAt: ts(),
+            updatedAtMillis: Date.now(),
           },
         ]}
         collaborating={[]}
@@ -68,7 +63,7 @@ describe('DashboardPage', () => {
             id: 'collab-1',
             name: 'Shared board',
             ownerDisplayName: 'Alex Kim',
-            updatedAt: ts(),
+            updatedAtMillis: Date.now(),
           },
         ]}
       />,
@@ -89,7 +84,7 @@ describe('DashboardPage', () => {
             id: 'only-mine',
             name: 'Private notes',
             ownerDisplayName: 'Me Myself',
-            updatedAt: ts(),
+            updatedAtMillis: Date.now(),
           },
         ]}
         collaborating={[]}

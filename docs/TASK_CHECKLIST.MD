@@ -218,35 +218,38 @@ The order within each task follows a strict rule:
 
 ## T6 · Canvas shell
 
-- [ ] Write `canvas-transform.ts` — pure functions: `applyPan(transform, delta)`, `applyZoom(transform, delta, origin)`, `clampZoom(scale)`
-- [ ] Write unit tests for `canvas-transform.test.ts`
-  - [ ] `applyPan` shifts x and y by the delta values
-  - [ ] `applyZoom` scales around the provided origin point
-  - [ ] `clampZoom` returns min when scale is below bounds, max when above
-  - [ ] `clampZoom` returns the value unchanged when within bounds
-- [ ] Write `note-geometry.ts` — pure functions: `snapToGrid(x, y, gridSize)`, `noteContainsPoint(note, x, y)`
-- [ ] Write unit tests for `note-geometry.test.ts`
-  - [ ] `snapToGrid` rounds x and y to the nearest grid increment
-  - [ ] `noteContainsPoint` returns true when point is inside note bounds
-  - [ ] `noteContainsPoint` returns false when point is outside note bounds
-- [ ] Write `color-picker.test.tsx`
-  - [ ] Renders exactly 6 colour swatches
-  - [ ] Clicking a swatch calls `onChange` with the correct hex value
-  - [ ] Active swatch has the correct `aria-pressed` state
-- [ ] Build `color-picker.tsx`
-- [ ] Write `sticky-note.test.tsx`
-  - [ ] Renders with the correct background colour from props
-  - [ ] Calls `onSelect` when clicked in non-edit mode
-  - [ ] Does not call `onSelect` when already in edit mode
-  - [ ] Renders `ColorPicker` when colour picker is open
-  - [ ] Calls `onColorChange` with the selected colour value
-- [ ] Build `sticky-note.tsx` — coloured card, positioned absolutely, drag-to-move, colour picker
-- [ ] Write `canvas.test.tsx`
-  - [ ] Renders all notes from the provided list
-  - [ ] Double-click on empty canvas area calls `onCreateNote` with the correct x/y coordinates
-  - [ ] Pointerdown + pointermove on the background updates the pan transform
-  - [ ] Scroll wheel calls `applyZoom` and updates the transform
-- [ ] Build `canvas.tsx` — full-viewport container, pan, zoom, note rendering
+- [x] Write `canvas-transform.ts` — pure functions: `applyPan(transform, delta)`, `applyZoom(transform, delta, origin)`, `clampZoom(scale)`
+- [x] Write unit tests for `canvas-transform.test.ts` ✓ 7/7 passing
+  - [x] `applyPan` shifts x and y by the delta values
+  - [x] `applyZoom` scales around the provided origin point
+  - [x] `clampZoom` returns min when scale is below bounds, max when above
+  - [x] `clampZoom` returns the value unchanged when within bounds
+- [x] Write `note-geometry.ts` — pure functions: `snapToGrid(x, y, gridSize)`, `noteContainsPoint(note, x, y)`
+- [x] Write unit tests for `note-geometry.test.ts` ✓ 6/6 passing
+  - [x] `snapToGrid` rounds x and y to the nearest grid increment
+  - [x] `noteContainsPoint` returns true when point is inside note bounds
+  - [x] `noteContainsPoint` returns false when point is outside note bounds
+- [x] Write `color-picker.test.tsx` ✓ 3/3 passing
+  - [x] Renders exactly 6 colour swatches
+  - [x] Clicking a swatch calls `onChange` with the correct hex value
+  - [x] Active swatch has the correct `aria-pressed` state
+- [x] Build `color-picker.tsx`
+- [x] Write `sticky-note.test.tsx` ✓ 8/8 passing
+  - [x] Renders with the correct background colour from props
+  - [x] Calls `onSelect` when clicked in non-edit mode
+  - [x] Does not call `onSelect` when already in edit mode
+  - [x] Renders `ColorPicker` when colour picker is open
+  - [x] Calls `onColorChange` with the selected colour value
+  - [x] Calls `onMove` with updated coordinates when the note is dragged
+  - [x] Calls `onSelect` on a tap when `onMove` is set but the pointer does not drag
+  - [x] Does not start a drag from the colour picker area
+- [x] Build `sticky-note.tsx` — coloured card, positioned absolutely, drag-to-move, colour picker
+- [x] Write `canvas.test.tsx` ✓ 4/4 passing
+  - [x] Renders all notes from the provided list
+  - [x] Double-click on empty canvas area calls `onCreateNote` with the correct x/y coordinates
+  - [x] Pointerdown + pointermove on the background updates the pan transform
+  - [x] Scroll wheel calls `applyZoom` and updates the transform
+- [x] Build `canvas.tsx` — full-viewport container, pan, zoom, note rendering
 
 > **PR 6** — Canvas shell: canvas-transform and note-geometry utils, all tests, then color-picker, sticky-note, canvas
 

@@ -1,29 +1,18 @@
 import Link from 'next/link'
 
+import { personDisplayInitials } from '@/common/utils/person-initials'
 import { getDashboardCopy, type IDashboardLocale } from '@/modules/dashboard/dashboard-i18n'
-import type { I_DASHBOARD_DashboardRoomRow } from '@/modules/dashboard/types'
+import {
+  dashboardRoomToClientProps,
+  type I_DASHBOARD_DashboardRoomRow,
+} from '@/modules/dashboard/types'
+import { dashboardGreetFirstName } from '@/modules/dashboard/utils/dashboard-greet-name'
 
 import { DashboardCreateFab } from './dashboard-create-fab'
 import { DashboardPage } from './dashboard-page'
 
 import './dashboard-chrome.css'
 import './dashboard-page.css'
-
-function userInitials(displayName: string): string {
-  const parts = displayName.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) {
-    return '?'
-  }
-  if (parts.length === 1) {
-    return parts[0].slice(0, 2).toUpperCase()
-  }
-  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
-}
-
-function firstName(displayName: string): string {
-  const part = displayName.trim().split(/\s+/)[0]
-  return part || displayName || 'there'
-}
 
 export interface I_DASHBOARD_DashboardLayoutProps {
   locale: IDashboardLocale
@@ -33,7 +22,7 @@ export interface I_DASHBOARD_DashboardLayoutProps {
   collaborating: I_DASHBOARD_DashboardRoomRow[]
 }
 
-/** Server Component: chrome + document list. Client boundary is only `DashboardCreateFab`. */
+/** Server Component: chrome; client islands `DashboardPage` + `DashboardCreateFab`. */
 export function DashboardLayout({
   locale,
   userDisplayName,
@@ -42,7 +31,7 @@ export function DashboardLayout({
   collaborating,
 }: I_DASHBOARD_DashboardLayoutProps) {
   const copy = getDashboardCopy(locale)
-  const greetName = firstName(userDisplayName)
+  const greetName = dashboardGreetFirstName(userDisplayName)
 
   return (
     <div data-klistra-dashboard-page className="dash">
@@ -82,7 +71,7 @@ export function DashboardLayout({
               title={userEmail ?? userDisplayName}
               aria-label={copy.accountAria}
             >
-              {userInitials(userDisplayName)}
+              {personDisplayInitials(userDisplayName)}
             </button>
           </div>
         </div>
@@ -96,7 +85,12 @@ export function DashboardLayout({
         </h1>
         <p className="dash-sub">{copy.greetSub}</p>
 
-        <DashboardPage locale={locale} owned={owned} collaborating={collaborating} copy={copy} />
+        <DashboardPage
+          locale={locale}
+          owned={owned.map(dashboardRoomToClientProps)}
+          collaborating={collaborating.map(dashboardRoomToClientProps)}
+          copy={copy}
+        />
       </main>
 
       <DashboardCreateFab copy={copy} />
