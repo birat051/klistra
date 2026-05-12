@@ -1,19 +1,23 @@
+'use client'
+
 import type { IDashboardCopy, IDashboardLocale } from '@/modules/dashboard/dashboard-i18n'
-import type { I_DASHBOARD_DashboardRoomRow } from '@/modules/dashboard/types'
+import type { I_DASHBOARD_DashboardRoomClientProps } from '@/modules/dashboard/types'
+import {
+  deleteDashboardRoom,
+  renameDashboardRoom,
+} from '@/modules/dashboard/utils/dashboard-room-actions'
 
 import { DocumentCard } from './document-card'
 
 import './dashboard-page.css'
 
-export type { I_DASHBOARD_DashboardRoomRow }
+export type { I_DASHBOARD_DashboardRoomClientProps }
 
 export interface I_DASHBOARD_DashboardPageProps {
   locale: IDashboardLocale
   copy: IDashboardCopy
-  owned?: I_DASHBOARD_DashboardRoomRow[]
-  collaborating?: I_DASHBOARD_DashboardRoomRow[]
-  onRenameRoom?: (roomId: string, newName: string) => void
-  onDeleteRoom?: (roomId: string) => void
+  owned?: I_DASHBOARD_DashboardRoomClientProps[]
+  collaborating?: I_DASHBOARD_DashboardRoomClientProps[]
 }
 
 export function DashboardPage({
@@ -21,8 +25,6 @@ export function DashboardPage({
   copy,
   owned = [],
   collaborating = [],
-  onRenameRoom,
-  onDeleteRoom,
 }: I_DASHBOARD_DashboardPageProps) {
   return (
     <>
@@ -88,11 +90,11 @@ export function DashboardPage({
                 roomId={room.id}
                 name={room.name}
                 ownerDisplayName={room.ownerDisplayName}
-                updatedAt={room.updatedAt}
+                updatedAtMillis={room.updatedAtMillis}
                 deleteLabel={copy.delete}
                 deleteConfirmMessage={copy.deleteConfirm}
-                onRename={(newName) => onRenameRoom?.(room.id, newName)}
-                onDelete={(roomId) => onDeleteRoom?.(roomId)}
+                onRename={(newName) => renameDashboardRoom(room.id, newName)}
+                onDelete={(roomId) => deleteDashboardRoom(roomId)}
               />
             ))}
           </div>
@@ -117,11 +119,11 @@ export function DashboardPage({
                 roomId={room.id}
                 name={room.name}
                 ownerDisplayName={room.ownerDisplayName}
-                updatedAt={room.updatedAt}
+                updatedAtMillis={room.updatedAtMillis}
                 deleteLabel={copy.delete}
                 deleteConfirmMessage={copy.deleteConfirm}
-                onRename={(newName) => onRenameRoom?.(room.id, newName)}
-                onDelete={(roomId) => onDeleteRoom?.(roomId)}
+                onRename={(newName) => renameDashboardRoom(room.id, newName)}
+                onDelete={(roomId) => deleteDashboardRoom(roomId)}
               />
             ))}
           </div>

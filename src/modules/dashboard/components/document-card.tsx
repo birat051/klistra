@@ -4,6 +4,11 @@ import { Timestamp } from 'firebase/firestore'
 import { useRef, useState } from 'react'
 
 import { formatTimestamp, type IFormatTimestampLocale } from '@/common/utils/format-timestamp'
+import { personDisplayInitials } from '@/common/utils/person-initials'
+import {
+  documentCardAvatarBackground,
+  documentCardOwnerFirstName,
+} from '@/modules/dashboard/utils/document-card-display'
 
 import './document-card.css'
 
@@ -12,38 +17,12 @@ interface I_DASHBOARD_DocumentCardProps {
   roomId: string
   name: string
   ownerDisplayName: string
-  updatedAt: Timestamp
+  /** Unix ms (RSC-safe); converted to `Timestamp` inside for formatting. */
+  updatedAtMillis: number
   deleteLabel?: string
   deleteConfirmMessage?: string
   onRename: (newName: string) => void
   onDelete: (roomId: string) => void
-}
-
-function getOwnerInitials(displayName: string): string {
-  const parts = displayName.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) {
-    return '?'
-  }
-  if (parts.length === 1) {
-    return parts[0].slice(0, 2).toUpperCase()
-  }
-  const first = parts[0][0]
-  const last = parts[parts.length - 1][0]
-  return `${first}${last}`.toUpperCase()
-}
-
-function ownerFirstName(displayName: string): string {
-  const first = displayName.trim().split(/\s+/)[0]
-  return first || '?'
-}
-
-function avatarBackground(displayName: string): string {
-  let h = 0
-  for (let i = 0; i < displayName.length; i += 1) {
-    h = displayName.charCodeAt(i) + ((h << 5) - h)
-  }
-  const hue = Math.abs(h) % 360
-  return `oklch(58% 0.12 ${hue})`
 }
 
 export function DocumentCard({
@@ -51,12 +30,13 @@ export function DocumentCard({
   roomId,
   name,
   ownerDisplayName,
-  updatedAt,
+  updatedAtMillis,
   deleteLabel = 'Delete',
   deleteConfirmMessage = 'Delete this document?',
   onRename,
   onDelete,
 }: I_DASHBOARD_DocumentCardProps) {
+  const updatedAt = Timestamp.fromMillis(updatedAtMillis)
   const [isRenaming, setIsRenaming] = useState(false)
   const [draftName, setDraftName] = useState('')
   const skipBlurCommitRef = useRef(false)
@@ -165,11 +145,13 @@ export function DocumentCard({
               role="img"
               aria-label={avatarAria}
               className="doccard__owner-avatar"
-              style={{ background: avatarBackground(ownerDisplayName) }}
+              style={{ background: documentCardAvatarBackground(ownerDisplayName) }}
             >
-              {getOwnerInitials(ownerDisplayName)}
+              {personDisplayInitials(ownerDisplayName)}
             </span>
-            <span className="doccard__owner-name">{ownerFirstName(ownerDisplayName)}</span>
+            <span className="doccard__owner-name">
+              {documentCardOwnerFirstName(ownerDisplayName)}
+            </span>
           </span>
           <span className="doccard__sep">·</span>
           <time dateTime={updated.toISOString()}>{formatTimestamp(updatedAt, locale)}</time>

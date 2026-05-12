@@ -1,0 +1,22 @@
+/* Swatch strip — from design/canvas.css (edit toolbar colors). */
+
+.cv-edit-toolbar__colors {
+  display: inline-flex;
+  gap: 4px;
+  padding: 0 4px;
+}
+
+.cv-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  background-clip: padding-box;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.cv-swatch[aria-pressed='true'] {
+  border-color: var(--ink, #1c1c1e);
+}

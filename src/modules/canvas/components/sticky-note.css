@@ -1,0 +1,46 @@
+/* Sticky note card — from design/canvas.css (`.cv-note`). */
+
+.cv-note {
+  position: absolute;
+  width: 180px;
+  padding: 12px 14px 14px;
+  border-radius: 3px 6px 4px 5px;
+  box-shadow:
+    0 1px 1px rgba(20, 30, 50, 0.07),
+    0 6px 14px -4px rgba(20, 30, 50, 0.15);
+  font-size: 13px;
+  color: oklch(22% 0.02 250);
+  z-index: 4;
+  cursor: default;
+  touch-action: none;
+}
+
+.cv-note--draggable {
+  cursor: grab;
+}
+
+.cv-note--dragging {
+  cursor: grabbing;
+}
+
+.cv-note__h {
+  font-family: var(--font-display, ui-sans-serif, system-ui);
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  letter-spacing: -0.005em;
+}
+
+.cv-note__b {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: oklch(30% 0.02 250);
+}
+
+.cv-note__picker {
+  margin-bottom: 10px;
+}
+
+.cv-note__picker .cv-edit-toolbar__colors {
+  justify-content: flex-start;
+}

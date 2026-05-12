@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klistra — Q2 strategy retro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="canvas.css">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+const I18N = window.I18N = {
+  en: {
+    back: "Back", history: "History", share: "Share",
+    saved: "Saved",
+    conn_online: "Online", conn_offline: "Working offline", conn_reconnecting: "Reconnecting…", conn_syncing: "Syncing changes…",
+    offline_banner: "You're offline. Edits are saved locally and will sync when you're back.",
+    reconnecting_banner: "Reconnecting… your edits are queued and will sync automatically.",
+    empty_title: "A blank canvas, ready when you are.",
+    empty_sub: "Double-click anywhere to drop your first sticky note.",
+    empty_dbl: "drop a note", empty_pan: "to pan", empty_undo: "undo",
+    editing: "is editing",
+    history_title: "History",
+    save_version: "Save version",
+    snapshot_saved: "Snapshot",
+    restore: "Restore",
+    did_create: "added a note", did_edit: "edited", did_delete: "deleted", did_move: "moved", did_color: "recolored",
+    share_title: "Share this canvas", share_sub: "Invite by email — they'll get a link to join.",
+    role_editor: "Editor", role_viewer: "Viewer", role_owner: "Owner",
+    invite: "Invite", pending: "pending", copy_link: "Copy link",
+    demo_state: "Preview:", demo_edit: "Note edit mode", demo_select: "Selection toolbar",
+    done: "Done",
+  },
+  sv: {
+    back: "Tillbaka", history: "Historik", share: "Dela",
+    saved: "Sparat",
+    conn_online: "Online", conn_offline: "Arbetar offline", conn_reconnecting: "Återansluter…", conn_syncing: "Synkar ändringar…",
+    offline_banner: "Du är offline. Ändringar sparas lokalt och synkas när du är tillbaka.",
+    reconnecting_banner: "Återansluter… dina ändringar är köade och synkas automatiskt.",
+    empty_title: "En tom yta, redo när du är.",
+    empty_sub: "Dubbelklicka var som helst för att lägga din första post-it.",
+    empty_dbl: "ny post-it", empty_pan: "för att panorera", empty_undo: "ångra",
+    editing: "redigerar",
+    history_title: "Historik",
+    save_version: "Spara version",
+    snapshot_saved: "Snapshot",
+    restore: "Återställ",
+    did_create: "skapade en post-it", did_edit: "redigerade", did_delete: "tog bort", did_move: "flyttade", did_color: "ändrade färg på",
+    share_title: "Dela den här ytan", share_sub: "Bjud in via e-post — de får en länk att gå med.",
+    role_editor: "Redigerare", role_viewer: "Läsare", role_owner: "Ägare",
+    invite: "Bjud in", pending: "väntar", copy_link: "Kopiera länk",
+    demo_state: "Förhandsvisa:", demo_edit: "Redigeringsläge", demo_select: "Markeringsverktyg",
+    done: "Klar",
+  },
+};
+
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "brand_color": "#5b7fb3",
+  "lang": "en",
+  "connection": "online",
+  "peers": true
+}/*EDITMODE-END*/;
+
+function applyBrand(hex) {
+  document.documentElement.style.setProperty("--brand", hex);
+  document.documentElement.style.setProperty("--brand-soft", `color-mix(in oklch, ${hex} 14%, white)`);
+  document.documentElement.style.setProperty("--brand-ink", `color-mix(in oklch, ${hex} 70%, black 30%)`);
+}
+applyBrand(TWEAKS.brand_color);
+document.documentElement.lang = TWEAKS.lang;
+</script>
+
+<script type="text/babel" src="canvas.jsx"></script>
+<script type="text/babel" data-presets="env,react">
+function makeT(lang) {
+  const dict = I18N[lang] || I18N.en;
+  return (k) => dict[k] !== undefined ? dict[k] : (I18N.en[k] || k);
+}
+
+function App() {
+  const [lang, setLang] = React.useState(TWEAKS.lang);
+  const [brand, setBrand] = React.useState(TWEAKS.brand_color);
+  const [connection, setConnection] = React.useState(TWEAKS.connection);
+  const [peers, setPeers] = React.useState(TWEAKS.peers);
+
+  React.useEffect(() => { applyBrand(brand); }, [brand]);
+  React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+
+  window.__setLang = setLang;
+  window.__setBrand = setBrand;
+  window.__setConnection = setConnection;
+  window.__setPeers = setPeers;
+
+  return <Canvas t={makeT(lang)} lang={lang} setLang={setLang} connection={connection} peers={peers} />;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" data-presets="env,react">
+const { TweaksPanel, TweakSection, TweakColor, TweakRadio, TweakToggle, useTweaks } = window;
+
+function TweaksApp() {
+  const [t, setTweak] = useTweaks(TWEAKS);
+  React.useEffect(() => { window.__setBrand && window.__setBrand(t.brand_color); }, [t.brand_color]);
+  React.useEffect(() => { window.__setLang && window.__setLang(t.lang); }, [t.lang]);
+  React.useEffect(() => { window.__setConnection && window.__setConnection(t.connection); }, [t.connection]);
+  React.useEffect(() => { window.__setPeers && window.__setPeers(t.peers); }, [t.peers]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection title="Brand">
+        <TweakColor label="Accent" value={t.brand_color}
+          onChange={(v) => setTweak("brand_color", v)}
+          options={["#5b7fb3", "#3a5a78", "#7a9b6a", "#b08968"]} />
+      </TweakSection>
+      <TweakSection title="Language">
+        <TweakRadio label="Locale" value={t.lang}
+          onChange={(v) => setTweak("lang", v)}
+          options={[{ value: "en", label: "English" }, { value: "sv", label: "Svenska" }]} />
+      </TweakSection>
+      <TweakSection title="Connection state">
+        <TweakRadio label="Status" value={t.connection}
+          onChange={(v) => setTweak("connection", v)}
+          options={[{ value: "online", label: "Online" }, { value: "offline", label: "Offline" }, { value: "reconnecting", label: "Reconnect" }]} />
+      </TweakSection>
+      <TweakSection title="Presence">
+        <TweakToggle label="Show peer cursors" value={t.peers} onChange={(v) => setTweak("peers", v)} />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+const tm = document.createElement("div");
+document.body.appendChild(tm);
+ReactDOM.createRoot(tm).render(<TweaksApp />);
+</script>
+</body>
+</html>
