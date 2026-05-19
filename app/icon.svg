@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <defs>
+    <filter id="klistra-mark-shadow" x="0" y="0" width="256" height="256" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#141E32" flood-opacity="0.25" />
+      <feDropShadow dx="0" dy="1" stdDeviation="0" flood-color="#000000" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  <g filter="url(#klistra-mark-shadow)">
+    <g transform="rotate(-8 128 128)">
+      <rect x="40" y="40" width="176" height="176" rx="24" fill="#5B7FB3" />
+      <rect x="72" y="72" width="112" height="16" rx="8" fill="white" fill-opacity="0.5" />
+    </g>
+  </g>
+</svg>
