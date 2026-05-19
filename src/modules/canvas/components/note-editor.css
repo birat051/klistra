@@ -1,0 +1,38 @@
+/* Note editor — edit mode content area (design: `.cv-note__b`). */
+
+.cv-note-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cv-note-editor .cv-edit-toolbar {
+  position: static;
+  transform: none;
+  flex-wrap: wrap;
+  box-shadow: 0 8px 20px -12px rgba(20, 30, 50, 0.25);
+}
+
+.cv-note-editor__content .ProseMirror {
+  outline: none;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: oklch(30% 0.02 250);
+  min-height: 3.5em;
+}
+
+.cv-note-editor__content .ProseMirror p {
+  margin: 0 0 0.5em;
+}
+
+.cv-note-editor__content .ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
+.cv-note-editor__static p {
+  margin: 0 0 0.5em;
+}
+
+.cv-note-editor__static p:last-child {
+  margin-bottom: 0;
+}

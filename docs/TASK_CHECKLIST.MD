@@ -257,24 +257,26 @@ The order within each task follows a strict rule:
 
 ## T7 · Tiptap editor (static)
 
-- [ ] Write `generate-note-html.ts` — thin wrapper around `generateHTML()` from `@tiptap/html` with the app's extension set
-- [ ] Write unit tests for `generate-note-html.test.ts`
-  - [ ] Returns a non-empty HTML string for a valid Tiptap JSON doc
-  - [ ] Returns an empty paragraph string for an empty doc
-  - [ ] Preserves bold marks in the output HTML
-  - [ ] Preserves bullet list structure in the output HTML
-- [ ] Write `editor-toolbar.test.tsx`
-  - [ ] Renders buttons for bold, italic, strikethrough, inline code, and bullet list
-  - [ ] Each button has a correct accessible label
-  - [ ] Bold button has an active class when `isBoldActive` prop is true
-  - [ ] Clicking an inactive bold button calls `onBold`
-- [ ] Build `editor-toolbar.tsx`
-- [ ] Write `note-editor.test.tsx`
-  - [ ] Renders static HTML output when `isEditing` is false
-  - [ ] Mounts the Tiptap editor when `isEditing` is true
-  - [ ] Calls `onBlur` when the editor loses focus
-  - [ ] Static HTML matches `generate-note-html` output for a given doc snapshot
-- [ ] Build `note-editor.tsx` — Tiptap instance, edit/view toggle, full toolbar, static HTML fallback
+- [x] Write `generate-note-html.ts` — thin wrapper around `generateHTML()` from `@tiptap/html` with the app's extension set
+- [x] Write unit tests for `generate-note-html.test.ts`
+  - [x] Returns a non-empty HTML string for a valid Tiptap JSON doc
+  - [x] Returns an empty paragraph string for an empty doc
+  - [x] Preserves bold marks in the output HTML
+  - [x] Preserves bullet list structure in the output HTML
+- [x] Write `editor-toolbar.test.tsx`
+  - [x] Renders buttons for bold, italic, strikethrough, inline code, and bullet list
+  - [x] Each button has a correct accessible label
+  - [x] Bold button has an active class when `isBoldActive` prop is true
+  - [x] Clicking an inactive bold button calls `onBold`
+- [x] Build `editor-toolbar.tsx`
+- [x] Write `note-editor.test.tsx`
+  - [x] Renders static HTML output when `isEditing` is false
+  - [x] Mounts the Tiptap editor when `isEditing` is true
+  - [x] Calls `onBlur` when the editor loses focus
+  - [x] Static HTML matches `generate-note-html` output for a given doc snapshot
+- [x] Build `note-editor.tsx` — Tiptap instance, edit/view toggle, full toolbar, static HTML fallback
+
+**Gate passed:** 12/12 tests passing (generate-note-html, editor-toolbar, note-editor) · 0 lint errors
 
 > **PR 7** — Tiptap editor: generate-note-html util, all tests, then editor-toolbar, note-editor
 
